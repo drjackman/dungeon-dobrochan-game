@@ -10,16 +10,10 @@ package ru.dobrochan.dungeon;
  */
 public class Settings
 {
-    private static int width = 1280;
-    private static int height = 800;
+    public static final int SCREEN_WIDTH = 1280;
+    public static final int SCREEN_HEIGHT = 800;
 
-    public static int getGameWidth()
-    {
-        return width;
-    }
+	public static final int FIELD_WIDTH = 35;
+	public static final int FIELD_HEIGHT = 16;
 
-    public static int getGameHeight()
-    {
-        return height;
-    }
 }

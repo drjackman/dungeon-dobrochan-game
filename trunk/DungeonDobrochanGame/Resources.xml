@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<!-- GAMEPLAY -->
+  <!-- Background -->
+  <resource type="image" id="WINDOW_BACKGROUND">Textures\Interface\BackBaseColor.png</resource>
+  <resource type="image" id="WINDOW_MAIN_MENU_BACK">Textures\MainMenu\MainMenuBack.png</resource>
+  <resource type="image" id="WINDOW_MAIN_MENU_WINDOW">Textures\MainMenu\MenuWindow.png</resource>
+  <resource type="image" id="WINDOW_LOGO">Textures\MainMenu\Logo.png</resource>
+  <resource type="image" id="WINDOW_BORDER">Textures\Interface\WindowBorder.png</resource>
+
+  <!-- Battlefield -->
+  <resource type="image" id="BATTLEFIELD_BORDER">Textures\Back\GridBorder.png</resource>
+  <resource type="image" id="BATTLEFIELD_GRID">Textures\Back\Grid001.png</resource>
+
+  <resource type="imagelist" id="BATTLEFIELD_ANGULAR_DECORATION">Textures\Back\AngularDecoration*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_BORDER_DECORATION">Textures\Back\BorderDecoration*.png</resource>
+
+  <!-- ROCK -->
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_SINGLE">Textures\Sprites\Objects\PrObj\Rock\Single*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_CENTER">Textures\Sprites\Objects\PrObj\Rock\Center*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_EXT_ANGLE">Textures\Sprites\Objects\PrObj\Rock\Ang*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_INT_ANGLE">Textures\Sprites\Objects\PrObj\Rock\ReAng*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_CROSS_ANGLE">Textures\Sprites\Objects\PrObj\Rock\DoubleAng*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_VSIDE">Textures\Sprites\Objects\PrObj\Rock\VSide*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_ROCK_HSIDE">Textures\Sprites\Objects\PrObj\Rock\HSide*.png</resource>
+
+  <!-- WATER -->
+  <resource type="imagelist" id="BATTLEFIELD_WATER_SINGLE">Textures\Sprites\Objects\PrObj\Water\Single*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_WATER_CENTER">Textures\Sprites\Objects\PrObj\Water\Center*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_WATER_EXT_ANGLE">Textures\Sprites\Objects\PrObj\Water\Ang*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_WATER_INT_ANGLE">Textures\Sprites\Objects\PrObj\Water\ReAng*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_WATER_CROSS_ANGLE">Textures\Sprites\Objects\PrObj\Water\DoubleAng*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_WATER_VSIDE">Textures\Sprites\Objects\PrObj\Water\VSide*.png</resource>
+  <resource type="imagelist" id="BATTLEFIELD_WATER_HSIDE">Textures\Sprites\Objects\PrObj\Water\HSide*.png</resource>
+
+  <!--  -->
+  <resource type="image" id="UNIT_BACKLIGHT">Textures\Interface\ColorsLightBack\Grey.png</resource>
+
+  <!-- Cursors -->
+  <resource type="cursor" id="CURSOR_DISTANT" hotSpotX="40" hotSpotY="3">Textures\Interface\Cursors\DistantAttack.png</resource>
+
+
+
+  <!-- HUD -->
+  <resource type="image" id="MENU_BUTTON_NORMAL">Textures\Interface\Button\LongMenuButton.png</resource>
+  <resource type="image" id="MENU_BUTTON_FOCUSED">Textures\Interface\Button\LongMenuButtonPreLight.png</resource>
+  <resource type="image" id="MENU_BUTTON_PRESSED">Textures\Interface\Button\LongMenuButtonPressed.png</resource>
+  <resource type="image" id="MENU_BUTTON_DISABLED">Textures\Interface\Button\LongMenuButtonGray.png</resource>
+
+  <!-- SOUNDS -->
+
+  <!-- PATHS -->
+  <resource type="text" id="UNIT_IMAGE">Textures\Sprites\Creatures\</resource>
+  <resource type="text" id="UNIT_IMAGE_BIG">Textures\Sprites\Creatures250\</resource>
+
+</resources>

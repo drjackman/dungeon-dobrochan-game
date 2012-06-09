@@ -13,7 +13,7 @@ import org.newdawn.slick.Sound;
  *
  * @author Admin
  */
-public class ContentManager implements IContentManager
+public class ContentManager
 {
 	private static final String EXT = ".png";
 
@@ -33,7 +33,6 @@ public class ContentManager implements IContentManager
 		return instance;
 	}
 
-	@Override
 	public Image getImage(String path, String name)
 	{
 		String fullPath = path + name + EXT;
@@ -52,7 +51,6 @@ public class ContentManager implements IContentManager
 		}
 	}
 
-	@Override
 	public Sound getSound(String path, String name)
 	{
 		throw new UnsupportedOperationException("Not supported yet.");
