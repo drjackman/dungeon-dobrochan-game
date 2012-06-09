@@ -9,12 +9,23 @@ import java.io.File;
  */
 public class ContentPaths
 {
-	public final static String TEXTURE = File.separator + "Textures" + File.separator;
-	public final static String BACK = TEXTURE + "Back" + File.separator;
-	public final static String INTERFACE = TEXTURE + "Interface" + File.separator;
-	public final static String MAIN_MENU = TEXTURE + "MainMenu" + File.separator;
+	private final static String fs = File.separator;
 
-	public final static String BUTTON = INTERFACE + "Button" + File.separator;
+	public final static String SCRIPTS = fs + "Scripts" + fs;
+
+	public final static String TEXTURE = fs + "Textures" + fs;
+	public final static String BACK = TEXTURE + "Back" + fs;
+	public final static String INTERFACE = TEXTURE + "Interface" + fs;
+	public final static String MAIN_MENU = TEXTURE + "MainMenu" + fs;
+	public final static String SPRITES = TEXTURE + "Sprites" + fs;
+
+	public final static String COLORS_LIGHT_BACK = INTERFACE + "ColorsLightBack" + fs;
+	public final static String BUTTON = INTERFACE + "Button" + fs;
+	public final static String CURSORS = INTERFACE + "Cursors" + fs;
+
+	public final static String CREATURES = SPRITES + "Creatures" + fs;
+
+
 
 	private ContentPaths() { }
 }
