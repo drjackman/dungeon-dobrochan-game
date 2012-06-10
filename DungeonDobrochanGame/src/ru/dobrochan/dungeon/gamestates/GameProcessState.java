@@ -1,23 +1,18 @@
 
 package ru.dobrochan.dungeon.gamestates;
 
-import org.newdawn.slick.Color;
-import ru.dobrochan.dungeon.core.renderobjects.EntityMultiRenderObject;
-import ru.dobrochan.dungeon.core.renderobjects.SimpleRenderObject;
-
-import static ru.dobrochan.dungeon.consts.UnitParams.*;
-import static ru.dobrochan.dungeon.consts.Surface.*;
-
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import ru.dobrochan.dungeon.content.ContentManager;
+import static ru.dobrochan.dungeon.consts.Surface.*;
+import static ru.dobrochan.dungeon.consts.UnitParams.*;
 import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.core.*;
-import ru.dobrochan.dungeon.core.renderobjects.*;
+import ru.dobrochan.dungeon.core.renderobjects.BlinkingSubstrateRenderObject;
+import ru.dobrochan.dungeon.core.renderobjects.EntityMultiRenderObject;
+import ru.dobrochan.dungeon.core.renderobjects.InflictDamageRenderObject;
+import ru.dobrochan.dungeon.core.renderobjects.SimpleRenderObject;
 
 /**
  *
@@ -29,19 +24,10 @@ public class GameProcessState extends BasicGameState
 	private Image background;
 	private Image windowBorder;
 
-	private Image gridBorder;
-	private Image grid;
-
-	public GameProcessState(int id)
-	{
-		this.id = id;
-	}
+	public GameProcessState(int id) { this.id = id; }
 
 	@Override
-	public int getID()
-	{
-		return id;
-	}
+	public int getID() { return id; }
 
 	private GameField gameField;
 	private GameFieldView gameFieldView;
@@ -51,11 +37,8 @@ public class GameProcessState extends BasicGameState
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		background = ContentManager.getInstance().getImage(ContentPaths.INTERFACE, "BackBaseColor");
-		windowBorder = ContentManager.getInstance().getImage(ContentPaths.INTERFACE, "WindowBorder");
-		gridBorder = ContentManager.getInstance().getImage(ContentPaths.BACK, "GridBorder");
-		grid = ContentManager.getInstance().getImage(ContentPaths.BACK, "Grid001");
-
+		background = ResourceManager.getInstance().getImage("WINDOW_BACKGROUND");
+		windowBorder = ResourceManager.getInstance().getImage("WINDOW_BORDER");
 
 		GameFieldBuilder gfb = new GameFieldBuilder();
 		gfb.setRect(5, 6, 4, 4, SURF_ROCK);
@@ -88,12 +71,9 @@ public class GameProcessState extends BasicGameState
 
 		//gfb.setRect(0, 0, 35, 16, SURF_WATER);
 
-
-
 		gameField = gfb.buildGameField();
 
 		gameFieldView = new GameFieldView(container);
-
 
 		IEntity entity = new Entity();
 		entity.setParam(U_X, 2);
@@ -110,9 +90,8 @@ public class GameProcessState extends BasicGameState
 				new Color(0, 0, 1.0f, 0.3f));
 
 		//SimpleRenderObject sro1 = new SimpleRenderObject();
-		//sro1.image = ContentManager.getInstance().getImage(ContentPaths.COLORS_LIGHT_BACK, "Blue");
 		SimpleRenderObject sro2 = new SimpleRenderObject();
-		sro2.image = ContentManager.getInstance().getImage(ContentPaths.CREATURES, "Vampire60");
+		sro2.image = ResourceManager.getInstance().loadImage("Vampire60", ContentPaths.CREATURES + "Vampire60.png");
 		entityRObj.addRenderObject(blinkRObj);
 		entityRObj.addRenderObject(sro2);
 

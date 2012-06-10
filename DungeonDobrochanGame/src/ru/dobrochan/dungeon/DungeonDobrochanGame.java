@@ -1,6 +1,7 @@
 package ru.dobrochan.dungeon;
 
 import java.io.*;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -71,7 +72,7 @@ public class DungeonDobrochanGame extends StateBasedGame
     {
 		try
 		{
-			//Test();
+			Test();
 			AppGameContainer app = new AppGameContainer(new DungeonDobrochanGame());
 			app.setDisplayMode(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, false);
 			app.setUpdateOnlyWhenVisible(false);
@@ -86,6 +87,8 @@ public class DungeonDobrochanGame extends StateBasedGame
 
 	private static void Test()
 	{
+		Properties pr = System.getProperties();
+
 		FileReader fr = null;
 		try
 		{

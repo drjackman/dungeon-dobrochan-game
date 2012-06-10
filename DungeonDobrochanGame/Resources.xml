@@ -37,8 +37,13 @@
   <resource type="image" id="UNIT_BACKLIGHT">Textures\Interface\ColorsLightBack\Grey.png</resource>
 
   <!-- Cursors -->
-  <resource type="cursor" id="CURSOR_DISTANT" hotSpotX="40" hotSpotY="3">Textures\Interface\Cursors\DistantAttack.png</resource>
+  <resource type="image" id="CURSOR_BACKLIGHT">Textures\Interface\Cursors\Backlight.png</resource>
 
+  <resource type="cursor" id="CURSOR_MAIN" hotSpotX="25" hotSpotY="16">Textures\Interface\Cursors\Hand.png</resource>
+  <resource type="cursor" id="CURSOR_DISTANT_ATTACK" hotSpotX="42" hotSpotY="15">Textures\Interface\Cursors\DistantAttack.png</resource>
+  <resource type="cursor" id="CURSOR_MAGIC" hotSpotX="15" hotSpotY="15">Textures\Interface\Cursors\Magic.png</resource>
+  <resource type="cursor" id="CURSOR_FLY" hotSpotX="25" hotSpotY="40">Textures\Interface\Cursors\Fly.png</resource>
+  <resource type="cursor" id="CURSOR_MOVE" hotSpotX="24" hotSpotY="37">Textures\Interface\Cursors\Move.png</resource>
 
 
   <!-- HUD -->

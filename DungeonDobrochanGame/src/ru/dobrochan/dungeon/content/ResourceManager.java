@@ -2,16 +2,12 @@
 package ru.dobrochan.dungeon.content;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,7 +34,7 @@ public class ResourceManager {
 	private Map<String, Cursor> cursorMap;
 	private Map<String, String> textMap;
 	private Map<String, List<Image>> imageListMap;
-	private String localPath;
+	public static final String PATH = System.getProperty("user.dir") + File.separator;
 
 	private ResourceManager(){
 		soundMap  = new HashMap<String, Sound>();
@@ -47,7 +43,6 @@ public class ResourceManager {
 		cursorMap = new HashMap<String, Cursor>();
 		textMap = new HashMap<String, String>();
 		imageListMap = new HashMap<String, List<Image>>();
-		localPath = new File("").getAbsolutePath() + File.separator;
 	}
 
 	public static ResourceManager getInstance(){
@@ -69,9 +64,7 @@ public class ResourceManager {
 		Document doc = null;
         try {
 			doc = docBuilder.parse (is);
-		} catch (SAXException e) {
-			throw new SlickException("Could not load resources", e);
-		} catch (IOException e) {
+		} catch (SAXException | IOException e) {
 			throw new SlickException("Could not load resources", e);
 		}
 
@@ -86,7 +79,8 @@ public class ResourceManager {
         	LoadingList.setDeferredLoading(true);
         }
 
-        for(int resourceIdx = 0; resourceIdx < totalResources; resourceIdx++){
+        for(int resourceIdx = 0; resourceIdx < totalResources; resourceIdx++)
+		{
 
         	Node resourceNode = listResources.item(resourceIdx);
 
@@ -95,23 +89,31 @@ public class ResourceManager {
 
         		String type = resourceElement.getAttribute("type");
 
-        		if(type.equals("image")){
-        			addElementAsImage(resourceElement);
-        		}else if(type.equals("sound")){
-        			addElementAsSound(resourceElement);
-        		}else if(type.equals("text")){
-        			addElementAsText(resourceElement);
-        		}else if(type.equals("font")){
-
-        		}else if(type.equals("animation")){
-        			addElementAsAnimation(resourceElement);
-        		}else if (type.equals("cursor")){
-					addElementAsCursor(resourceElement);
-				}else if (type.equals("imagelist"))
-					addElementAsImageList(resourceElement);
-        	}
-        }
-
+				switch (type)
+				{
+					case "image":
+						addElementAsImage(resourceElement);
+						break;
+					case "sound":
+						addElementAsSound(resourceElement);
+						break;
+					case "text":
+						addElementAsText(resourceElement);
+						break;
+					case "font":
+						break;
+					case "animation":
+						addElementAsAnimation(resourceElement);
+						break;
+					case "cursor":
+						addElementAsCursor(resourceElement);
+						break;
+					case "imagelist":
+						addElementAsImageList(resourceElement);
+						break;
+				}
+			}
+		}
 	}
 
 	private void addElementAsAnimation(Element resourceElement) throws SlickException
@@ -128,7 +130,7 @@ public class ResourceManager {
 		if(spriteSheetPath == null || spriteSheetPath.length() == 0)
 			throw new SlickException("Image resource [" + id + "] has invalid path");
 
-		spriteSheetPath = localPath + spriteSheetPath;
+		spriteSheetPath = PATH + spriteSheetPath;
 		loadImage( SPRITE_SHEET_REF + id, spriteSheetPath);
 
 		animationMap.put(id, new ResourceAnimationData(SPRITE_SHEET_REF+id, tw, th, duration));
@@ -178,7 +180,7 @@ public class ResourceManager {
 		Sound sound = null;
 
 		try {
-			path = localPath + path;
+			path = PATH + path;
 			sound = new Sound(path);
 		} catch (SlickException e) {
 			throw new SlickException("Could not load sound", e);
@@ -205,7 +207,7 @@ public class ResourceManager {
 
 		Image image = null;
 		try{
-			path = localPath + path;
+			path = PATH + path;
 			image = new Image(path);
 		} catch (SlickException e) {
 			throw new SlickException("Could not load image", e);
@@ -233,7 +235,7 @@ public class ResourceManager {
 		int ps = pattern.lastIndexOf("\\");
 		String path = pattern.substring(0, ps);
 		String patternStr = pattern.substring(ps+1);
-		File f = new File(localPath + path);
+		File f = new File(PATH + path);
 		String[] list = f.list();
 		String[] split = patternStr.split("\\*");
 
@@ -241,12 +243,13 @@ public class ResourceManager {
 			throw new SlickException("ImageList resource [" + id + "] has invalid pattern");
 
 		ArrayList<Image> result = new ArrayList<Image>();
-		Image image = null;
+		Image image;
 		for (String file : list)
 		{
 			if (file.startsWith(split[0]) && file.endsWith(split[1]))
-				try{
-					String imagePath = localPath + path + File.separator + file;
+				try
+				{
+					String imagePath = PATH + path + File.separator + file;
 					image = new Image(imagePath);
 					result.add(image);
 				} catch (SlickException e) {
@@ -278,10 +281,10 @@ public class ResourceManager {
 		Cursor cursor = null;
 		try
 		{
-			path = localPath + path;
-			cursor = CursorLoader.get().getCursor(path, hotSpotY, hotSpotY);
+			path = PATH + path;
+			cursor = CursorLoader.get().getCursor(path, hotSpotX, hotSpotY);
 		}
-		catch (Exception e)
+		catch (IOException | LWJGLException e)
 		{
 			throw new SlickException("Could not load cursor", e);
 		}

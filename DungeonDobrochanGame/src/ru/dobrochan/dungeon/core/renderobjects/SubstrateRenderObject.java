@@ -4,8 +4,7 @@ package ru.dobrochan.dungeon.core.renderobjects;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import ru.dobrochan.dungeon.content.ContentManager;
-import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 
 /**
  *
@@ -13,8 +12,7 @@ import ru.dobrochan.dungeon.content.ContentPaths;
  */
 public class SubstrateRenderObject extends EntityRenderObject
 {
-	private static final Image image = ContentManager.getInstance().
-			getImage(ContentPaths.COLORS_LIGHT_BACK, "Mono");
+	private static final Image image = ResourceManager.getInstance().getImage("UNIT_BACKLIGHT");
 
 	private Color color;
 

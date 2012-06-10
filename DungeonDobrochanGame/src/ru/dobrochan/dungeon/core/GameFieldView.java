@@ -1,26 +1,23 @@
 
 package ru.dobrochan.dungeon.core;
 
-import ru.dobrochan.dungeon.core.renderobjects.RenderObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.newdawn.slick.GameContainer;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Cursor;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
-import org.newdawn.slick.opengl.CompositeImageData;
-import org.newdawn.slick.opengl.ImageData;
-import org.newdawn.slick.opengl.ImageIOImageData;
-import org.newdawn.slick.opengl.PNGImageData;
 import ru.dobrochan.dungeon.Settings;
-import ru.dobrochan.dungeon.content.ContentManager;
-import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.core.renderobjects.CellBacklightRenderObject;
+import ru.dobrochan.dungeon.core.renderobjects.RenderObject;
 
 /**
  *
@@ -78,12 +75,17 @@ public class GameFieldView extends AbstractComponent
 		super(context);
 		try
 		{
-			Image cursor = ContentManager.getInstance().getImage(ContentPaths.CURSORS, "DistantAttack");
-			PNGImageData cursorData = new PNGImageData();
-
-			super.container.setMouseCursor(ContentPaths.CURSORS + "DistantAttack.png", 40, 3);
+			Cursor cursor = ResourceManager.getInstance().getCursor("CURSOR_MAIN");
+			try
+			{
+				Mouse.setNativeCursor(cursor);
+			}
+			catch (LWJGLException ex)
+			{
+				Logger.getLogger(GameFieldView.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
-		catch (SlickException ex)
+		catch (Exception ex)
 		{
 			Logger.getLogger(GameFieldView.class.getName()).log(Level.SEVERE, null, ex);
 		}

@@ -3,14 +3,11 @@ package ru.dobrochan.dungeon.gamestates;
 import java.io.File;
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.w3c.dom.css.Counter;
 import ru.dobrochan.dungeon.DungeonDobrochanGame;
 import ru.dobrochan.dungeon.Settings;
-import ru.dobrochan.dungeon.content.ContentManager;
-import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.ui.ActionHandler;
 import ru.dobrochan.dungeon.ui.MainMenuButton;
 import ru.dobrochan.dungeon.ui.MyTextField;
@@ -48,9 +45,9 @@ public class MainMenuState extends BasicGameState
 	{
 		this.game = (DungeonDobrochanGame)game;
 
-		background = ContentManager.getInstance().getImage(ContentPaths.INTERFACE, "BackBaseColor");
-		windowBorder = ContentManager.getInstance().getImage(ContentPaths.INTERFACE, "WindowBorder");
-		logo = ContentManager.getInstance().getImage(ContentPaths.MAIN_MENU, "Logo");
+		background = ResourceManager.getInstance().getImage("WINDOW_BACKGROUND");
+		windowBorder = ResourceManager.getInstance().getImage("WINDOW_BORDER");
+		logo = ResourceManager.getInstance().getImage("WINDOW_LOGO");
 		logo.setCenterOfRotation(logo.getWidth(), 0);
 		java.awt.Font jFont = new java.awt.Font("Arial", java.awt.Font.BOLD, 12);
 
