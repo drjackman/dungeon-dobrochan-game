@@ -5,8 +5,7 @@
 package ru.dobrochan.dungeon.ui;
 
 import org.newdawn.slick.gui.GUIContext;
-import ru.dobrochan.dungeon.content.ContentManager;
-import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 /**
  *
  * @author Admin
@@ -21,10 +20,10 @@ public class MainMenuButton extends TextButton
 	public MainMenuButton(GUIContext context, String label, int x, int y)
 	{
 		super(context, label);
-		normal = ContentManager.getInstance().getImage(ContentPaths.BUTTON, "LongMenuButton");
-		hovered = ContentManager.getInstance().getImage(ContentPaths.BUTTON, "LongMenuButtonPreLight");
-		pressed = ContentManager.getInstance().getImage(ContentPaths.BUTTON, "LongMenuButtonPressed");
-		disabled = ContentManager.getInstance().getImage(ContentPaths.BUTTON, "LongMenuButtonGray");
+		normal = ResourceManager.getInstance().getImage("MENU_BUTTON_NORMAL");
+		hovered = ResourceManager.getInstance().getImage("MENU_BUTTON_FOCUSED");
+		pressed = ResourceManager.getInstance().getImage("MENU_BUTTON_PRESSED");
+		disabled = ResourceManager.getInstance().getImage("MENU_BUTTON_DISABLED");
 		setWidth(normal.getWidth());
 		setHeight(normal.getHeight());
 		setLocation(x, y);

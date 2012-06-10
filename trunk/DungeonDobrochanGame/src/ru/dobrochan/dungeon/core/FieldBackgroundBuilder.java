@@ -1,7 +1,6 @@
 
 package ru.dobrochan.dungeon.core;
 
-import static ru.dobrochan.dungeon.consts.Surface.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +11,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import ru.dobrochan.dungeon.Settings;
-import ru.dobrochan.dungeon.content.ContentManager;
-import ru.dobrochan.dungeon.content.ContentPaths;
+import static ru.dobrochan.dungeon.consts.Surface.*;
 import ru.dobrochan.dungeon.content.ResourceManager;
 
 /**
@@ -87,8 +85,8 @@ public class FieldBackgroundBuilder
 		surfaceMap.put(SURF_ROCK, rockMap);
 		surfaceMap.put(SURF_WATER, waterMap);
 
-		grid = ContentManager.getInstance().getImage(ContentPaths.BACK, "Grid001");
-		gridBorder = ContentManager.getInstance().getImage(ContentPaths.BACK, "GridBorder");
+		grid = ResourceManager.getInstance().getImage("BATTLEFIELD_GRID");
+		gridBorder = ResourceManager.getInstance().getImage("BATTLEFIELD_BORDER");
 		gridWidth = grid.getWidth();
 		gridHeight = grid.getHeight();
 
@@ -415,9 +413,6 @@ public class FieldBackgroundBuilder
 		List<Image> imgList = surfaceMap.get(surface).get(SINGLE);
 		int len = imgList.size();
 		Image img = imgList.get(random.nextInt(len));
-//		img.setRotation(0);
-//		img.setCenterOfRotation(c, c);
-//		img.setRotation(90 * random.nextInt(4));
 		g.drawImage(img, x, y);
 	}
 
@@ -447,7 +442,6 @@ public class FieldBackgroundBuilder
 			img = img.getFlippedCopy(true, true);
 		if (rotation == 3)
 			img = img.getFlippedCopy(true, false);
-//		img.setRotation(90 * rotation);
 		g.drawImage(img, x, y);
 	}
 

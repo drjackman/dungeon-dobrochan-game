@@ -4,8 +4,7 @@ package ru.dobrochan.dungeon.core.renderobjects;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import ru.dobrochan.dungeon.content.ContentManager;
-import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.core.Cell;
 import ru.dobrochan.dungeon.core.GameFieldView;
 
@@ -15,7 +14,7 @@ import ru.dobrochan.dungeon.core.GameFieldView;
  */
 public class CellBacklightRenderObject extends RenderObject
 {
-	private static Image image = ContentManager.getInstance().getImage(ContentPaths.CURSORS, "Backlight");
+	private static Image image = ResourceManager.getInstance().getImage("CURSOR_BACKLIGHT");
 
 	private int x;
 	private int y;
