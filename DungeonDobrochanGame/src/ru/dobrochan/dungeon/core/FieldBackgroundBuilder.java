@@ -15,6 +15,7 @@ import static ru.dobrochan.dungeon.consts.Surface.*;
 import ru.dobrochan.dungeon.content.ResourceManager;
 
 /**
+ * Представляет методы экземпляра класса для создания фона и неизменяемых объектов для GameFieldView.
  *
  * @author SkinnyMan
  */
@@ -57,6 +58,9 @@ public class FieldBackgroundBuilder
 
 	private Random random = new Random();
 
+	/**
+	 * Инициализирует новый экземпляр класса FieldBackgroundBuilder.
+	 */
 	public FieldBackgroundBuilder()
 	{
 		ResourceManager rm = ResourceManager.getInstance();
@@ -90,13 +94,39 @@ public class FieldBackgroundBuilder
 		gridWidth = grid.getWidth();
 		gridHeight = grid.getHeight();
 
+		// Угловые декорации.
 		angularDecoration.addAll(ResourceManager.getInstance().getImageList("BATTLEFIELD_ANGULAR_DECORATION"));
 
+		// Бордюрные декорации.
 		borderDecoration.addAll(ResourceManager.getInstance().getImageList("BATTLEFIELD_BORDER_DECORATION"));
 
 
 	}
 
+	/**
+	 * Получает GameField, который будет использоваться при построении фона.
+	 *
+	 * @return GameField
+	 */
+	public GameField getGameField()	{ return gameField; }
+
+	/**
+	 * Задает GameField, который будет использоваться при построении фона.
+	 *
+	 * @param gameField GameField
+	 */
+	public void setGameField(GameField gameField)
+	{
+		this.gameField = gameField;
+		gfWidth = gameField.getWidth();
+		gfHeight = gameField.getHeight();
+	}
+
+	/**
+	 * Создает фон для GameFieldView, содержащий неизменяемые элементы игрового поля.
+	 *
+	 * @return изображение, содержащие неизменяемые элементы игрового поля.
+	 */
 	public Image buildBackground()
 	{
 		try
@@ -115,6 +145,9 @@ public class FieldBackgroundBuilder
 		}
 	}
 
+	/**
+	 * Бордюрчик с декорациями.
+	 */
 	private void drawBorder()
 	{
 		g.drawImage(gridBorder, 0, 0);
@@ -123,9 +156,17 @@ public class FieldBackgroundBuilder
 		drawBorderDecoration();
 	}
 
+	/**
+	 * Угловые декорации.
+	 */
 	private void drawAngularDecoration()
 	{
+		// Вероятность отрисовки декорации в угле.
 		final double angRnd = 0.5;
+
+		// TODO Выглядит нормально, но метод setRotation(), а точнее setCenterOfRotation() работает не корректно. Передаелать под отражение.
+
+		// Левый верхний.
 		if (random.nextDouble() < angRnd)
 		{
 			int angImg = random.nextInt(angularDecoration.size());
@@ -135,6 +176,7 @@ public class FieldBackgroundBuilder
 							 gridOffsetY - img.getHeight() + angularDecorOffsetY);
 		}
 
+		// Правый верхний.
 		if (random.nextDouble() < angRnd)
 		{
 			int angImg = random.nextInt(angularDecoration.size());
@@ -144,6 +186,7 @@ public class FieldBackgroundBuilder
 							 gridOffsetY - img.getHeight() + angularDecorOffsetY);
 		}
 
+		// Правый нижний.
 		if (random.nextDouble() < angRnd)
 		{
 			int angImg = random.nextInt(angularDecoration.size());
@@ -153,6 +196,7 @@ public class FieldBackgroundBuilder
 							 gridOffsetY + gridHeight - angularDecorOffsetY);
 		}
 
+		// Левый нижний.
 		if (random.nextDouble() < angRnd)
 		{
 			int angImg = random.nextInt(angularDecoration.size());
@@ -163,10 +207,18 @@ public class FieldBackgroundBuilder
 		}
 	}
 
+	/**
+	 * Бордюрные декорации.
+	 */
 	private void drawBorderDecoration()
 	{
+		// Максимальное кол-во декораций вверху и внизу.
 		final int horizCount = 3;
+
+		// Максимальное кол-во декораций слева и справа.
 		final int vertCount = 2;
+
+		// Область на бордюрах возле углов, куда нельзя размещать декорации.
 		final int indent = 20;
 
 		// Верх
@@ -234,12 +286,18 @@ public class FieldBackgroundBuilder
 		}
 	}
 
+	/**
+	 * Рисуем сетку и поверхность.
+	 */
 	private void drawGrid()
 	{
 		g.drawImage(grid, gridOffsetX, gridOffsetY);
 		drawLandscape();
 	}
 
+	/**
+	 * Рисуем поверхность.
+	 */
 	private void drawLandscape()
 	{
 		for (int i = 0; i < gfHeight; i++)
@@ -247,6 +305,12 @@ public class FieldBackgroundBuilder
 				processCell(j, i);
 	}
 
+	/**
+	 * Анализ каждой ячейки для отрисовки поверхности.
+	 *
+	 * @param x координата X ячейки
+	 * @param y координата Y ячейки
+	 */
 	private void processCell(int x, int y)
 	{
 		int gfW = gfWidth - 1;
@@ -254,16 +318,22 @@ public class FieldBackgroundBuilder
 
 		int id = gameField.getCell(x, y);
 
+		// Пусто? Ничего не делаем.
 		if (id == SURF_EMPTY)
 			return;
 
+		// Подсчет смежных занятых ячеек для уголков.
+		// Уголок - ячейка по диагонали и 2 смежные с ней по бокам.
+		// lu - LeftUp, rd - RightDown и т.д.
 		int luC = 0;
 		int ruC = 0;
 		int rdC = 0;
 		int ldC = 0;
 
+		// Количество смежных занятых ячеек.
 		int cellCount = 0;
 
+		// Проверяем по часовой стрелке начиная с левого.
 		if (x>0 && gameField.getCell(x-1, y) == id)
 		{
 			luC++;
@@ -309,6 +379,7 @@ public class FieldBackgroundBuilder
 			cellCount++;
 		}
 
+		// Абсолютные координаты ячейки.
 		int pointX = gridOffsetX + cellWidth * x;
 		int pointY = gridOffsetY + cellHeight * y;
 
@@ -406,8 +477,13 @@ public class FieldBackgroundBuilder
 		}
 	}
 
-	private static final float c = 15f;
-
+	/**
+	 * Рисуем одиночную ячейку с рельефом.
+	 *
+	 * @param x абсолютная координата X ячейки
+	 * @param y абсолютная координата Y ячейки
+	 * @param surface тип рельефа
+	 */
 	private void drawSingle(int x, int y, int surface)
 	{
 		List<Image> imgList = surfaceMap.get(surface).get(SINGLE);
@@ -416,6 +492,13 @@ public class FieldBackgroundBuilder
 		g.drawImage(img, x, y);
 	}
 
+	/**
+	 * Рисуем центровую ячейку с рельефом.
+	 *
+	 * @param x абсолютная координата X ячейки
+	 * @param y абсолютная координата Y ячейки
+	 * @param surface тип рельефа
+	 */
 	private void drawCenter(int x, int y, int surface)
 	{
 		List<Image> imgList = surfaceMap.get(surface).get(CENTER);
@@ -431,6 +514,14 @@ public class FieldBackgroundBuilder
 		g.drawImage(img, x, y);
 	}
 
+	/**
+	 * Рисуем внешний угол с рельефом.
+	 *
+	 * @param x абсолютная координата X ячейки
+	 * @param y абсолютная координата Y ячейки
+	 * @param rotation ориентация угла
+	 * @param surface тип рельефа
+	 */
 	private void drawExtAngle(int x, int y, int rotation, int surface)
 	{
 		List<Image> imgList = surfaceMap.get(surface).get(EXT_ANGLE);
@@ -445,6 +536,14 @@ public class FieldBackgroundBuilder
 		g.drawImage(img, x, y);
 	}
 
+	/**
+	 * Рисуем внетренний угол.
+	 *
+	 * @param x абсолютная координата X ячейки
+	 * @param y абсолютная координата Y ячейки
+	 * @param rotation ориентация угла
+	 * @param surface тип рельефа
+	 */
 	private void drawIntAngle(int x, int y, int rotation, int surface)
 	{
 		List<Image> imgList = surfaceMap.get(surface).get(INT_ANGLE);
@@ -459,6 +558,14 @@ public class FieldBackgroundBuilder
 		g.drawImage(img, x, y);
 	}
 
+	/**
+	 * Рисуем двойной угол.
+	 *
+	 * @param x абсолютная координата X ячейки
+	 * @param y абсолютная координата Y ячейки
+	 * @param rotation ориентация угла
+	 * @param surface тип рельефа
+	 */
 	private void drawCrossAngle(int x, int y, int rotation, int surface)
 	{
 		List<Image> imgList = surfaceMap.get(surface).get(CROSS_ANGLE);
@@ -473,6 +580,14 @@ public class FieldBackgroundBuilder
 		g.drawImage(img, x, y);
 	}
 
+	/**
+	 * Рисуем боковую сторону.
+	 *
+	 * @param x абсолютная координата X ячейки
+	 * @param y абсолютная координата Y ячейки
+	 * @param rotation ориентация боковушки
+	 * @param surface тип рельефа
+	 */
 	private void drawSide(int x, int y, int rotation, int surface)
 	{
 		List<Image> imgList;
@@ -489,12 +604,4 @@ public class FieldBackgroundBuilder
 		g.drawImage(img, x, y);
 	}
 
-	public GameField getGameField()	{ return gameField; }
-
-	public void setGameField(GameField gameField)
-	{
-		this.gameField = gameField;
-		gfWidth = gameField.getWidth();
-		gfHeight = gameField.getHeight();
-	}
 }

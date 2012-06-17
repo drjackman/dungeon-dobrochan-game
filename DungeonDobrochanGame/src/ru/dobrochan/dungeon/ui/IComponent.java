@@ -1,5 +1,4 @@
-
-package ru.dobrochan.dungeon.core;
+package ru.dobrochan.dungeon.ui;
 
 /**
  *

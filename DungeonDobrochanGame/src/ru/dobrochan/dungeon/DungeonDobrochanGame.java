@@ -85,6 +85,11 @@ public class DungeonDobrochanGame extends StateBasedGame
 		}
     }
 
+	private static void MusicTest()
+	{
+
+	}
+
 	private static void Test()
 	{
 		Properties pr = System.getProperties();

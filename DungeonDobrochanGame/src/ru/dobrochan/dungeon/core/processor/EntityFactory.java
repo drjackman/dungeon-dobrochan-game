@@ -30,7 +30,7 @@ public class EntityFactory
 		{
 			if (ent.getParam("name") == type)
 			{
-				entity = ent.Clone();
+				entity = ent.clone();
 			}
 		}
 
