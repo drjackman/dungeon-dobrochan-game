@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import static ru.dobrochan.dungeon.consts.UnitParams.*;
-import static ru.dobrochan.dungeon.consts.ObstaclesAndMovement.*;
+import static ru.dobrochan.dungeon.consts.Obstacles.*;
 
 /**
+ * Предоставляет методы экземпляра класса для вычисления зоны досягаемости и расчета пути.
  *
  * @author SkinnyMan
  */
@@ -24,6 +25,42 @@ public class PathFinder
 	private int mapHeight;
 	private int mapWidth;
 
+	/**
+	 * Возвращает игровое поле.
+	 *
+	 * @deprecated будет убрано
+	 * @return игровое поле
+	 */
+	public GameField getGameField() { return gameField;	}
+
+	/**
+	 * Задает игровое поле.
+	 *
+	 * @deprecated будет убрано
+	 * @param gameField
+	 */
+	public void setGameField(GameField gameField) { this.gameField = gameField;	}
+
+	/**
+	 * Возвращет контейнер игровых сущностей.
+	 *
+	 * @return контейнер игровых сущностей
+	 */
+	public IEntityContainer getEntityContainer() { return entities; }
+
+	/**
+	 * Задает контейнер игровых сущностей.
+	 *
+	 * @param entities контейнер игровых сущностей
+	 */
+	public void setEntityContainer(IEntityContainer entities) { this.entities = entities; }
+
+	/**
+	 * Возвращает множество досягаемых ячеек для указанной игровой сущности.
+	 *
+	 * @param entity сущности, для которой требуется вычислить досягаемые ячейки
+	 * @return множество досягаемых ячеек
+	 */
 	public Cell[] getReachableCells(IEntity entity)
 	{
 		int untiSize = (Integer)entity.getParam(U_SIZE);
@@ -38,11 +75,23 @@ public class PathFinder
 		return null;
 	}
 
+	/**
+	 * Возвращает множество ячеек являющихся петем указанной сущности к цели target.
+	 *
+	 * @param entity игровая сущность, для которой требуется вычислить путь
+	 * @param target целевая ячейка
+	 * @return множество ячеек, являющееся путем
+	 */
 	public Cell[] getPath(IEntity entity, Cell target)
 	{
-		return null;
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
+	/**
+	 * Подготавливает массив, представляющий карту проходимости, к расчетам с помощю волнового алгоритма.
+	 *
+	 * @param entity игровая сущность, для которой ведутся расчеты
+	 */
 	private void buildWaveAlgorithmMap(IEntity entity)
 	{
 		int unitMovement = (Integer)entity.getParam(U_MOVEMENT);
@@ -71,6 +120,13 @@ public class PathFinder
 			}
 	}
 
+	/**
+	 * Устанавливает заданную область как непроходимую.
+	 *
+	 * @param i координата ячейки
+	 * @param j координата ячейки
+	 * @param size размер сущности, для которой происходит вычисления
+	 */
 	private void setUnpass(int i, int j, int size)
 	{
 		for (int y = i; y > i - size; y--)
@@ -79,6 +135,13 @@ public class PathFinder
 					passableMap[y][x] = UNPASSABLE;
 	}
 
+	/**
+	 * Выполняет волновой алгоритм для карты проходимости.
+	 *
+	 * @param x координата X исходной точки
+	 * @param y координата Y исходной точки
+	 * @param steps количество шагов, которые можно выполнить
+	 */
 	private void waveAlgorithm(int x, int y, int steps)
 	{
 		int step = 1;
@@ -95,6 +158,7 @@ public class PathFinder
 				for(Cell cell : nearCells)
 					passableMap[cell.Y][cell.X] = step;
 			}
+			// свап
 			tmpWave = wave1;
 			wave1 = wave2;
 			wave2 = tmpWave;
@@ -103,6 +167,12 @@ public class PathFinder
 		while (step < steps && wave2.size() > 0);
 	}
 
+	/**
+	 * Вспомогательный метод для волнового алгоритма. Возвращает свободные соседние ячейки для указанной.
+	 *
+	 * @param cell ячейка, для которой находятся свободные смежные
+	 * @return массив свободных соседних ячеек
+	 */
 	private ArrayList<Cell> getNearCells(Cell cell)
 	{
 		ArrayList<Cell> cells = new ArrayList<Cell>();
@@ -134,11 +204,4 @@ public class PathFinder
 		return cells;
 	}
 
-	public GameField getGameField() { return gameField;	}
-
-	public void setGameField(GameField gameField) { this.gameField = gameField;	}
-
-	public IEntityContainer getEntityContainer() { return entities; }
-
-	public void setEntityContainer(IEntityContainer entities) { this.entities = entities; }
 }

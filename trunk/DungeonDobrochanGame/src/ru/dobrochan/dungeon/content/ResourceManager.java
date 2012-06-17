@@ -1,13 +1,13 @@
 
 package ru.dobrochan.dungeon.content;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,6 +15,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Cursor;
 import org.newdawn.slick.*;
 import org.newdawn.slick.loading.LoadingList;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioImpl;
+import org.newdawn.slick.openal.DeferredSound;
 import org.newdawn.slick.opengl.CursorLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,22 +25,26 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/** Представляет средства для работы с ресурсами. */
 public class ResourceManager {
 
 	private static String SPRITE_SHEET_REF = "__SPRITE_SHEET_";
 
+	// Синглтон.
 	private static ResourceManager _instance = new ResourceManager();
 
-	private Map<String, Sound> soundMap;
+	private Map<String, Music> soundMap;
 	private Map<String, Image> imageMap;
 	private Map<String, ResourceAnimationData> animationMap;
 	private Map<String, Cursor> cursorMap;
 	private Map<String, String> textMap;
 	private Map<String, List<Image>> imageListMap;
+
+	/** Рабочая директория приложения. */
 	public static final String PATH = System.getProperty("user.dir") + File.separator;
 
 	private ResourceManager(){
-		soundMap  = new HashMap<String, Sound>();
+		soundMap  = new HashMap<String, Music>();
 		imageMap = new HashMap<String, Image>();
 		animationMap = new HashMap<String, ResourceAnimationData>();
 		cursorMap = new HashMap<String, Cursor>();
@@ -45,14 +52,28 @@ public class ResourceManager {
 		imageListMap = new HashMap<String, List<Image>>();
 	}
 
+	/** Возвращает единственный экземпляр класса ResourceManager. */
 	public static ResourceManager getInstance(){
 		return _instance;
 	}
 
+	/**
+	 * Загружает ресурсы из указанного потока.
+	 *
+	 * @param is входной поток, содержащий XML с данными о ресурсах.
+	 * @throws SlickException указывает, что произошла ошибка при загрузке ресурсов.
+	 */
 	public void loadResources(InputStream is) throws SlickException {
 		loadResources(is, false);
 	}
 
+	/**
+	 * Загружает ресурсы из указанного потока с возможность отложеной загрузки ресурсов.
+	 *
+	 * @param is входной поток, содержащий XML с данными о ресурсах.
+	 * @param deferred указывает, будет ли загрузка отложена до превого использования ресурса.
+	 * @throws SlickException указывает, что произошла ошибка при загрузке ресурсов.
+	 */
 	public void loadResources(InputStream is, boolean deferred) throws SlickException {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = null;
@@ -68,7 +89,7 @@ public class ResourceManager {
 			throw new SlickException("Could not load resources", e);
 		}
 
-		// normalize text representation
+		// Нормализует представление текста.
         doc.getDocumentElement().normalize ();
 
         NodeList listResources = doc.getElementsByTagName("resource");
@@ -116,6 +137,12 @@ public class ResourceManager {
 		}
 	}
 
+	/**
+	 *
+	 *
+	 * @param resourceElement
+	 * @throws SlickException
+	 */
 	private void addElementAsAnimation(Element resourceElement) throws SlickException
 	{
 		loadAnimation(resourceElement.getAttribute("id"), resourceElement.getTextContent(),
@@ -152,6 +179,14 @@ public class ResourceManager {
 		loadText(resourceElement.getAttribute("id"), resourceElement.getTextContent());
 	}
 
+	/**
+	 * Загружает строковой русурс.
+	 *
+	 * @param id идентефикатор ресурса
+	 * @param value строка ресурса
+	 * @return строку ресурса
+	 * @throws SlickException ошибка при загрузке ресурса, value не может быть null
+	 */
 	public String loadText(String id, String value) throws SlickException
 	{
 		if(value == null)
@@ -162,9 +197,15 @@ public class ResourceManager {
 		return value;
 	}
 
-	public String getText(String ID)
+	/**
+	 * Возвращает строковой ресурс по указанному id.
+	 *
+	 * @param id идентификатор ресурса
+	 * @return струку ресурса
+	 */
+	public String getText(String id)
 	{
-		return textMap.get(ID);
+		return textMap.get(id);
 	}
 
 	private void addElementAsSound(Element resourceElement) throws SlickException
@@ -172,27 +213,36 @@ public class ResourceManager {
 		loadSound(resourceElement.getAttribute("id"), resourceElement.getTextContent());
 	}
 
-	public Sound loadSound(String id, String path) throws SlickException
+	/**
+	 * Загружает звуковой ресурс.
+	 *
+	 * @param id идентификатор ресурса
+	 * @param path путь к файлу
+	 * @return загруженный звук
+	 * @throws SlickException ошибка при загрузке ресурса, недопустимый path
+	 */
+	public Music loadSound(String id, String path) throws SlickException
 	{
 		if(path == null || path.length() == 0)
 			throw new SlickException("Sound resource [" + id + "] has invalid path");
 
-		Sound sound = null;
+		Music music = null;
+		path = PATH + path;
+		music = new Music(path);
 
-		try {
-			path = PATH + path;
-			sound = new Sound(path);
-		} catch (SlickException e) {
-			throw new SlickException("Could not load sound", e);
-		}
+		this.soundMap.put(id, music);
 
-		this.soundMap.put(id, sound);
-
-		return sound;
+		return music;
 	}
 
-	public final Sound getSound(String ID){
-		return soundMap.get(ID);
+	/**
+	 * Возвращает звуковой ресурс по указанному id.
+	 *
+	 * @param id идентификатор ресурса
+	 * @return звуковой ресурс
+	 */
+	public final Music getSound(String id){
+		return soundMap.get(id);
 	}
 
 	private void addElementAsImage(Element resourceElement) throws SlickException
@@ -200,6 +250,14 @@ public class ResourceManager {
 		loadImage(resourceElement.getAttribute("id"), resourceElement.getTextContent());
 	}
 
+	/**
+	 * Загружает изображения по указанному id.
+	 *
+	 * @param id идентификатор ресурса
+	 * @param path путь к файлу
+	 * @return изображение
+	 * @throws SlickException ошибка при загрузке ресурса
+	 */
 	public Image loadImage(String id, String path) throws SlickException
 	{
 		if(path == null || path.length() == 0)
@@ -218,8 +276,14 @@ public class ResourceManager {
 		return image;
 	}
 
-	public final Image getImage(String ID){
-		return imageMap.get(ID);
+	/**
+	 * Возвращает изображение по указанному id.
+	 *
+	 * @param id идентификатор ресурса
+	 * @return изображение
+	 */
+	public final Image getImage(String id){
+		return imageMap.get(id);
 	}
 
 	private void addElementAsImageList(Element resourceElement) throws SlickException
@@ -227,11 +291,20 @@ public class ResourceManager {
 		loadImageList(resourceElement.getAttribute("id"), resourceElement.getTextContent());
 	}
 
+	/**
+	 * Загружает список изображений. Список формируется из изображений удовлетваряющих указанному паттерну.
+	 *
+	 * @param id идентефикатор ресурса
+	 * @param pattern шаблон имени (должна быть одна и только одна звездочка)
+	 * @return список изображений
+	 * @throws SlickException ошибка при загрузке ресурса
+	 */
 	public List<Image> loadImageList(String id, String pattern) throws SlickException
 	{
 		if(pattern == null || pattern.length() == 0)
 			throw new SlickException("ImageList resource [" + id + "] has invalid pattern");
 
+		// Разбор паттерна.
 		int ps = pattern.lastIndexOf("\\");
 		String path = pattern.substring(0, ps);
 		String patternStr = pattern.substring(ps+1);
@@ -244,6 +317,7 @@ public class ResourceManager {
 
 		ArrayList<Image> result = new ArrayList<Image>();
 		Image image;
+		// Поиск файлов, удовлетворяющих паттерну.
 		for (String file : list)
 		{
 			if (file.startsWith(split[0]) && file.endsWith(split[1]))
@@ -262,8 +336,14 @@ public class ResourceManager {
 		return result;
 	}
 
-	public final List<Image> getImageList(String ID) {
-		return imageListMap.get(ID);
+	/**
+	 * Возвращает список изображений по указанному id.
+	 *
+	 * @param id идентефикатор ресурса
+	 * @return список изображений
+	 */
+	public final List<Image> getImageList(String id) {
+		return imageListMap.get(id);
 	}
 
 	private void addElementAsCursor(Element resourceElement) throws SlickException
@@ -273,6 +353,16 @@ public class ResourceManager {
 				Integer.valueOf(resourceElement.getAttribute("hotSpotY")));
 	}
 
+	/**
+	 * Загружает курсор.
+	 *
+	 * @param id идентефикатор ресурса
+	 * @param path путь к файлу
+	 * @param hotSpotX координата X hotSpot курсора
+	 * @param hotSpotY координата Y hotSpot курсора
+	 * @return курсор
+	 * @throws SlickException ошибка при загрузке ресурса
+	 */
 	public Cursor loadCursor(String id, String path, int hotSpotX, int hotSpotY) throws SlickException
 	{
 		if(path == null || path.length() == 0)
@@ -293,6 +383,12 @@ public class ResourceManager {
 		return cursor;
 	}
 
+	/**
+	 * Возвращает курсор по указанному id.
+	 *
+	 * @param id идентефикатор ресурса
+	 * @return курсор
+	 */
 	public final Cursor getCursor(String id)
 	{
 		return cursorMap.get(id);

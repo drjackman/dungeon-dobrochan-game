@@ -25,10 +25,10 @@ public class Button extends AbstractComponent
 	private boolean isVisible;
 	private boolean isEnabled;
 
-	public Image normal;
-	public Image hovered;
-	public Image pressed;
-	public Image disabled;
+	protected Image normal;
+	protected Image hovered;
+	protected Image pressed;
+	protected Image disabled;
 
 	private int x;
 	private int y;
@@ -169,6 +169,12 @@ public class Button extends AbstractComponent
 			isHovered = true;
 		else
 			isHovered = false;
+	}
+
+	@Override
+	public boolean isAcceptingInput()
+	{
+		return true;
 	}
 
 }

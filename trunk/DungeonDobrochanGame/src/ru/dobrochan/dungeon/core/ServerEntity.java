@@ -2,27 +2,44 @@
 package ru.dobrochan.dungeon.core;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
  * @author SkinnyMan
  */
-public class ServerEntity extends Entity
+public class ServerEntity implements IEntity
 {
 
 
 	@Override
 	public void setParam(String name, Object value)
 	{
-		super.setParam(name, value);
-		// Уведомление об изменениях.
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public void setParams(Map params)
 	{
-		super.setParams(params);
-		// Уведомление об изменениях.
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public IEntity clone()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Object getParam(String name)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public Set<String> getParams()
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 

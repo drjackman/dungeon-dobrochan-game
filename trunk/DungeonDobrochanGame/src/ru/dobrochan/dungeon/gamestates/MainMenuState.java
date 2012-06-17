@@ -98,16 +98,25 @@ public class MainMenuState extends BasicGameState
 		windowBorder.draw(0, 0);
 	}
 
-	private int counter = 0;
-
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
-		counter++;
-		if (counter >= 1000)
-		{
-			System.out.println(counter);
-			counter = 0;
-		}
+
 	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException
+	{
+		System.out.println("Enter MainMenu");
+	}
+
+
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException
+	{
+		System.out.println("Leave MainMenu");
+	}
+
+
 }

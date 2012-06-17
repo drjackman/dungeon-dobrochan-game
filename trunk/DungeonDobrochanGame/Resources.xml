@@ -3,9 +3,9 @@
 <!-- GAMEPLAY -->
   <!-- Background -->
   <resource type="image" id="WINDOW_BACKGROUND">Textures\Interface\BackBaseColor.png</resource>
-  <resource type="image" id="WINDOW_MAIN_MENU_BACK">Textures\MainMenu\MainMenuBack.png</resource>
+  <resource type="image" id="WINDOW_MAIN_MENU_BACK">Textures\MainMenu\MainMenuBack1.png</resource>
   <resource type="image" id="WINDOW_MAIN_MENU_WINDOW">Textures\MainMenu\MenuWindow.png</resource>
-  <resource type="image" id="WINDOW_LOGO">Textures\MainMenu\Logo.png</resource>
+  <resource type="image" id="WINDOW_LOGO">Textures\MainMenu\LogoOld.png</resource>
   <resource type="image" id="WINDOW_BORDER">Textures\Interface\WindowBorder.png</resource>
 
   <!-- Battlefield -->
@@ -39,6 +39,7 @@
   <!-- Cursors -->
   <resource type="image" id="CURSOR_BACKLIGHT">Textures\Interface\Cursors\Backlight.png</resource>
 
+  <resource type="cursor" id="CURSOR_TEST" hotSpotX="30" hotSpotY="30">Textures\Interface\Cursors\Grey.png</resource>
   <resource type="cursor" id="CURSOR_MAIN" hotSpotX="25" hotSpotY="16">Textures\Interface\Cursors\Hand.png</resource>
   <resource type="cursor" id="CURSOR_DISTANT_ATTACK" hotSpotX="42" hotSpotY="15">Textures\Interface\Cursors\DistantAttack.png</resource>
   <resource type="cursor" id="CURSOR_MAGIC" hotSpotX="15" hotSpotY="15">Textures\Interface\Cursors\Magic.png</resource>
@@ -50,9 +51,10 @@
   <resource type="image" id="MENU_BUTTON_NORMAL">Textures\Interface\Button\LongMenuButton.png</resource>
   <resource type="image" id="MENU_BUTTON_FOCUSED">Textures\Interface\Button\LongMenuButtonPreLight.png</resource>
   <resource type="image" id="MENU_BUTTON_PRESSED">Textures\Interface\Button\LongMenuButtonPressed.png</resource>
-  <resource type="image" id="MENU_BUTTON_DISABLED">Textures\Interface\Button\LongMenuButtonGray.png</resource>
+  <resource type="image" id="MENU_BUTTON_DISABLED">Textures\Interface\Button\LongMenuButtonInactiv.png</resource>
 
   <!-- SOUNDS -->
+  <resource type="sound" id="MUSIC_TEST">Music\combat_theme_01_ogg.ogg</resource>
 
   <!-- PATHS -->
   <resource type="text" id="UNIT_IMAGE">Textures\Sprites\Creatures\</resource>
