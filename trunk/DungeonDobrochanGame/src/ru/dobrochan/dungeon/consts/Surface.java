@@ -1,11 +1,9 @@
 
 package ru.dobrochan.dungeon.consts;
 
-import static ru.dobrochan.dungeon.consts.Obstacles.*;
+import static ru.dobrochan.dungeon.consts.ObstaclesAndMovement.*;
 
 /**
- * Содержит константы, характеризующие рельеф поверхности.
- * (скорей всего поменяется)
  *
  * @author SkinnyMan
  */

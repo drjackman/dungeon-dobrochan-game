@@ -18,6 +18,7 @@ public abstract class RenderObject implements IRenderObject
 		return 10;
 	}
 
+
 	public GameFieldView getGameFieldView() { return gameFieldView; }
 	public void setGameFieldView(GameFieldView fieldView) { gameFieldView = fieldView; }
 }
