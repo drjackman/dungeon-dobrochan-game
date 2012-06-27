@@ -11,12 +11,9 @@ import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
-import org.newdawn.slick.openal.Audio;
 import ru.dobrochan.dungeon.Settings;
 import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.core.renderobjects.CellBacklightRenderObject;
@@ -73,8 +70,6 @@ public class GameFieldView extends AbstractComponent
 
 	private CursorBacklight cursorBacklight;
 
-	private Music music;
-
 	public GameFieldView(GUIContext context)
 	{
 		super(context);
@@ -95,8 +90,6 @@ public class GameFieldView extends AbstractComponent
 			Logger.getLogger(GameFieldView.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-
-		//music = ResourceManager.getInstance().getSound("MUSIC_TEST");
 
 		width = 1085;
 		height = 496;
@@ -172,23 +165,11 @@ public class GameFieldView extends AbstractComponent
 		{
 			renderObjects.get(i).update(delta);
 		}
-//		if (musicStopping)
-//		{
-//			if (music.getPosition() >= stopPos)
-//			{
-//				musicStopping = false;
-//				music.setPosition(pos2);
-//			}
-//		}
 //		for (RenderObject rObj : renderObjects)
 //		{
 //			rObj.update(delta);
 //		}
 	}
-
-	String musicData = "---";
-	boolean checkMusic = false;
-	boolean musicStopping = false;
 
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException
@@ -198,8 +179,7 @@ public class GameFieldView extends AbstractComponent
 		{
 			rObj.render(g);
 		}
-//		if (checkMusic)
-//			g.drawString(String.valueOf((float)Math.round(1000 * music.getPosition()) / 1000), 100, 100);
+
 	}
 
 	@Override
@@ -217,43 +197,14 @@ public class GameFieldView extends AbstractComponent
 		cursorBacklight.update(c);
 	}
 
-	float pos1 = 28.571f;
-	float pos2 = 211.428f;
-	float tact = 1.428f;
-
-	float stopPos = 0;
-
 	@Override
 	public void mousePressed(int button, int x, int y)
 	{
 		Cell c = getCellByXY(x, y);
-		if (c == null)
-			return;
-
-		/*
-		if (c.X == 0 && c.Y == 0)
-			music.play();
-		if (c.X == 1 && c.Y == 0)
-			checkMusic = true;
-		if (c.X == 2 && c.Y == 0)
-			music.setPosition(pos1);
-		if (c.X == 3 && c.Y == 0)
-			music.setPosition(pos2);
-		if (c.X == 4 && c.Y == 0)
-		{
-			musicStopping = true;
-			float curPos = music.getPosition();
-			float relPos = curPos - pos1;
-			float tacts = relPos / tact;
-			float tactsCeli = (float)Math.ceil(tacts) * tact;
-			stopPos = pos1 + tactsCeli;
-			System.out.println("CurPos: " + curPos + " StopPos: " + stopPos + " relPos: " + relPos + " tacts: " + tacts + " tactsCeli: " + tactsCeli);
-		}
-		*/
-
-
 		System.out.println(c.X + " " + c.Y);
 	}
+
+
 
 	public Cell getCellByXY(int x, int y)
 	{

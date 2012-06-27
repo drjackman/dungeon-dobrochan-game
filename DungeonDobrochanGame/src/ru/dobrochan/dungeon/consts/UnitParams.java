@@ -2,7 +2,6 @@
 package ru.dobrochan.dungeon.consts;
 
 /**
- * Содержит названия параметров сущностей.
  *
  * @author SkinnyMan
  */
