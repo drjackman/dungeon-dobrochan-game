@@ -6,6 +6,7 @@ import java.util.Arrays;
 import ru.dobrochan.dungeon.core.IEntity;
 
 /**
+ * Класс для создания игровых сущностей. In progress…
  *
  * @author SkinnyMan
  */
@@ -26,13 +27,17 @@ public class EntityFactory
 	public IEntity CreateEntityByType(String type)
 	{
 		IEntity entity = null;
-		for(IEntity ent : entityTypes)
+		for(IEntity typeEnt : entityTypes)
 		{
-			if (ent.getParam("name") == type)
+			if (typeEnt.getParam("name") == type)
 			{
-				entity = ent.clone();
+				entity = typeEnt;
+				break;
 			}
 		}
+		if (entity == null)
+			return null;
+
 
 		return entity;
 	}

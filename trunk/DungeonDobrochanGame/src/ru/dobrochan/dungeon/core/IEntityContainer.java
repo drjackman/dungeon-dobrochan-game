@@ -8,18 +8,6 @@ package ru.dobrochan.dungeon.core;
 public interface IEntityContainer extends Iterable<IEntity>
 {
 	/**
-	 * Получает сущность по координатам.
-	 * Скорей всего перенесу этот метод в другой класс.
-	 *
-	 * @deprecated Будет в другом классе.
-	 *
-	 * @param x координата X ячейки
-	 * @param y координата Y ячейки
-	 * @return игровая сущность, находящаяся в данной ячейке.
-	 */
-	IEntity getEntityFromXY(int x, int y);
-
-	/**
 	 * Возвращает количество сущностей в контейнере.
 	 *
 	 * @return количество сущностей в контейнере

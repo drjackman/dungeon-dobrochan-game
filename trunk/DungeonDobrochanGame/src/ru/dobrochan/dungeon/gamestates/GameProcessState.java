@@ -102,7 +102,7 @@ public class GameProcessState extends BasicGameState
 		ClientEntity clientEntity = new ClientEntity(entity);
 		clientEntity.setRenderObject(entityRObj);
 
-		entitiesContainer = new EntitiesContainer();
+		entitiesContainer = new EntityContainer();
 		gameFieldView.setEntitysContainer(entitiesContainer);
 		entitiesContainer.addEntity(clientEntity);
 

@@ -17,8 +17,6 @@ public abstract class EntityRenderObject extends RenderObject
 
 	protected int getOwnerX() { return ownerX; }
 	protected int getOwnerY() { return ownerY; }
-	protected void setOwnerX(int x) { ownerX = x; }
-	protected void setOwnerY(int y) { ownerY = y; }
 
 	public void setOwner(IEntity owner)
 	{

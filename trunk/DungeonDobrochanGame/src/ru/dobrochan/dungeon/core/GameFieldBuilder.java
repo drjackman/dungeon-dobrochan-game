@@ -5,6 +5,7 @@ import static ru.dobrochan.dungeon.consts.Surface.*;
 import ru.dobrochan.dungeon.Settings;
 
 /**
+ * Вспомогательный класс для создания декоративного рельефа.
  *
  * @author SkinnyMan
  */

@@ -10,14 +10,14 @@ import static ru.dobrochan.dungeon.consts.UnitParams.*;
  *
  * @author SkinnyMan
  */
-public class EntitiesContainer implements IEntityContainer
+public class EntityContainer implements IEntityContainer
 {
 	private ArrayList<IEntity> entitys;
 
 	/**
 	 * Инициализирует новый экземпляр класса EntitiesContainer
 	 */
-	public EntitiesContainer()
+	public EntityContainer()
 	{
 		entitys = new ArrayList<IEntity>();
 	}
@@ -57,24 +57,4 @@ public class EntitiesContainer implements IEntityContainer
 	{
 		return entitys.size();
 	}
-
-	/**
-	 * @see IEntityContainer#getEntityFromXY(int, int)
-	 */
-	@Override
-	public IEntity getEntityFromXY(int x, int y)
-	{
-		for (IEntity entity : entitys)
-		{
-			int entityX = (Integer)entity.getParam(U_X);
-			int entityY = (Integer)entity.getParam(U_Y);
-			int entityW = (Integer)entity.getParam(U_WIDTH);
-			int entityH = (Integer)entity.getParam(U_HEIGHT);
-			if (x >= entityX && x < entityX + entityW)
-				if (y >= entityY && y < entityY + entityH)
-					return entity;
-		}
-		return null;
-	}
-
 }

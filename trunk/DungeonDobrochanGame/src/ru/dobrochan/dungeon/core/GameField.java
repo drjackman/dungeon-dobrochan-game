@@ -93,11 +93,7 @@ public class GameField
 	 */
 	private void buildPassableMap()
 	{
-		for (int i = 0; i < heightCells; i++)
-			for (int j = 0; j < widthCells; j++)
-			{
-				passableMap[i][j] = getPassability(field[i][j]);
-			}
+
 	}
 
 }

@@ -20,6 +20,7 @@ import ru.dobrochan.dungeon.core.renderobjects.CellBacklightRenderObject;
 import ru.dobrochan.dungeon.core.renderobjects.RenderObject;
 
 /**
+ * Представление игрового поля.
  *
  * @author SkinnyMan
  */
@@ -137,6 +138,11 @@ public class GameFieldView extends AbstractComponent
 
 	public int getCellHeight() { return cellHeight; }
 
+	/**
+	 * Добавляет RenderObject в процесс отрисовки.
+	 *
+	 * @param renderObject
+	 */
 	public void addRenderObject(RenderObject renderObject)
 	{
 		renderObject.setGameFieldView(this);
@@ -154,11 +160,21 @@ public class GameFieldView extends AbstractComponent
 		}
 	}
 
+	/**
+	 * Удаляет RenderObject из процесса отрисовки.
+	 *
+	 * @param renderObject
+	 */
 	public void removeRenderObject(RenderObject renderObject)
 	{
 		renderObjects.remove(renderObject);
 	}
 
+	/**
+	 * Вызывает обновление RenderObject'ов игрового поля.
+	 *
+	 * @param delta
+	 */
 	public void update(int delta)
 	{
 		for (int i = 0; i < renderObjects.size(); i++)
@@ -171,6 +187,13 @@ public class GameFieldView extends AbstractComponent
 //		}
 	}
 
+	/**
+	 * Вызывает перерисовку игрового поля.
+	 *
+	 * @param container
+	 * @param g
+	 * @throws SlickException
+	 */
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException
 	{
@@ -186,13 +209,15 @@ public class GameFieldView extends AbstractComponent
 	public void mouseMoved(int oldx, int oldy, int newx, int newy)
 	{
 		Cell c = getCellByXY(newx, newy);
-		if (c != null){
-		IEntity entityFromXY = entitysContainer.getEntityFromXY(c.X, c.Y);
-		if (entityFromXY != null)
+		if (c != null)
 		{
-			int s = 0;
-			System.out.println("CX=" + c.X + " CY=" + c.Y);
-		}
+			EntitiesHalper helper = new EntitiesHalper(entitysContainer);
+			IEntity entityFromXY = helper.getEntityFromXY(c.X, c.Y);
+			if (entityFromXY != null)
+			{
+				int s = 0;
+				System.out.println("CX=" + c.X + " CY=" + c.Y);
+			}
 		}
 		cursorBacklight.update(c);
 	}

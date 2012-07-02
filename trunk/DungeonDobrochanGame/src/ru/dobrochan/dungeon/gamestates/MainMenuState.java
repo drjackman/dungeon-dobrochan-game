@@ -45,7 +45,7 @@ public class MainMenuState extends BasicGameState
 	{
 		this.game = (DungeonDobrochanGame)game;
 
-		background = ResourceManager.getInstance().getImage("WINDOW_BACKGROUND");
+		background = ResourceManager.getInstance().getImage("WINDOW_MAIN_MENU_BACK");
 		windowBorder = ResourceManager.getInstance().getImage("WINDOW_BORDER");
 		logo = ResourceManager.getInstance().getImage("WINDOW_LOGO");
 		logo.setCenterOfRotation(logo.getWidth(), 0);

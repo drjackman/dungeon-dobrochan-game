@@ -22,6 +22,8 @@ public class UnitScriptHandler
 
 	private ScriptEngine engine;
 
+	private IEntity[] entities;
+
 	public UnitScriptHandler(Reader reader)
 	{
 		try
@@ -50,6 +52,13 @@ public class UnitScriptHandler
 		{
 			Logger.getLogger(UnitScriptHandler.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	}
+
+	public IEntity[] getUnits()
+	{
+		if (entities == null)
+			entities = LoadUnits();
+		return LoadUnits();
 	}
 
 	public IEntity[] LoadUnits()
