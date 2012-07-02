@@ -2,10 +2,10 @@
 <resources>
 <!-- GAMEPLAY -->
   <!-- Background -->
-  <resource type="image" id="WINDOW_BACKGROUND">Textures\Interface\BackBaseColor.png</resource>
-  <resource type="image" id="WINDOW_MAIN_MENU_BACK">Textures\MainMenu\MainMenuBack1.png</resource>
-  <resource type="image" id="WINDOW_MAIN_MENU_WINDOW">Textures\MainMenu\MenuWindow.png</resource>
-  <resource type="image" id="WINDOW_LOGO">Textures\MainMenu\LogoOld.png</resource>
+  <resource type="image" id="WINDOW_BACKGROUND">Textures\Interface\MainMenu\MainMenuBack1.png</resource>
+  <resource type="image" id="WINDOW_MAIN_MENU_BACK">Textures\Interface\MainMenu\MainMenuBack1.png</resource>
+  <resource type="image" id="WINDOW_MAIN_MENU_WINDOW">Textures\Interface\MainMenu\MenuWindow.png</resource>
+  <resource type="image" id="WINDOW_LOGO">Textures\Interface\MainMenu\LogoOld.png</resource>
   <resource type="image" id="WINDOW_BORDER">Textures\Interface\WindowBorder.png</resource>
 
   <!-- Battlefield -->
@@ -39,7 +39,6 @@
   <!-- Cursors -->
   <resource type="image" id="CURSOR_BACKLIGHT">Textures\Interface\Cursors\Backlight.png</resource>
 
-  <resource type="cursor" id="CURSOR_TEST" hotSpotX="30" hotSpotY="30">Textures\Interface\Cursors\Grey.png</resource>
   <resource type="cursor" id="CURSOR_MAIN" hotSpotX="25" hotSpotY="16">Textures\Interface\Cursors\Hand.png</resource>
   <resource type="cursor" id="CURSOR_DISTANT_ATTACK" hotSpotX="42" hotSpotY="15">Textures\Interface\Cursors\DistantAttack.png</resource>
   <resource type="cursor" id="CURSOR_MAGIC" hotSpotX="15" hotSpotY="15">Textures\Interface\Cursors\Magic.png</resource>
