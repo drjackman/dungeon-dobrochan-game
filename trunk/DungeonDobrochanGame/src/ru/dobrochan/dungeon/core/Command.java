@@ -1,7 +1,7 @@
 package ru.dobrochan.dungeon.core;
 
 /**
- * Команда для обработки.
+ * Represent the command to processing.
  *
  * @author SkinnyMan
  */
@@ -11,9 +11,9 @@ public class Command
 	private Object data;
 
 	/**
-	 * Инициирует новый экземпляр класса Command без данных.
+	 * Initialize a new instance of Command class without a data.
 	 *
-	 * @param id идентификатор комманды
+	 * @param id the command's identifier
 	 */
 	public Command(int id)
 	{
@@ -21,10 +21,10 @@ public class Command
 	}
 
 	/**
-	 * Инициирует новый экземпляр класса Command с указанными данными.
+	 * Initialize a new instance of Command class with the specified data.
 	 *
-	 * @param id идентификатор комманды
-	 * @param data данные
+	 * @param id the command's identifier
+	 * @param data the data
 	 */
 	public Command(int id, Object data)
 	{
@@ -33,9 +33,9 @@ public class Command
 	}
 
 	/**
-	 * Возвращает идентификатор команды
+	 * Returns the identifier of this command.
 	 *
-	 * @return идентификатор команды
+	 * @return identifier
 	 */
 	public int getID()
 	{
@@ -43,9 +43,9 @@ public class Command
 	}
 
 	/**
-	 * Возвращает данные связанные с данный командой.
+	 * Returns the data associated with this command.
 	 *
-	 * @return данные
+	 * @return data
 	 */
 	public Object getData()
 	{

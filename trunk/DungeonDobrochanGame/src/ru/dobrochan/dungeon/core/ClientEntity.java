@@ -1,12 +1,13 @@
 
 package ru.dobrochan.dungeon.core;
 
-import ru.dobrochan.dungeon.core.renderobjects.IRenderObject;
+import ru.dobrochan.dungeon.core.gameview.renderobjects.IRenderObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 /**
  *
+ * @deprecated
  * @author SkinnyMan
  */
 public class ClientEntity extends Entity

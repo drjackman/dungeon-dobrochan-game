@@ -1,6 +1,6 @@
-package ru.dobrochan.dungeon.core.renderobjects;
+package ru.dobrochan.dungeon.core.gameview.renderobjects;
 
-import ru.dobrochan.dungeon.core.GameFieldView;
+import ru.dobrochan.dungeon.core.gameview.GameFieldView;
 import ru.dobrochan.dungeon.core.IEntity;
 import static ru.dobrochan.dungeon.consts.UnitParams.*;
 

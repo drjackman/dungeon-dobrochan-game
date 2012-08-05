@@ -1,8 +1,8 @@
 
-package ru.dobrochan.dungeon.core.renderobjects;
+package ru.dobrochan.dungeon.core.gameview.renderobjects;
 
-import ru.dobrochan.dungeon.core.GameFieldView;
-import ru.dobrochan.dungeon.core.renderobjects.IRenderObject;
+import ru.dobrochan.dungeon.core.gameview.GameFieldView;
+import ru.dobrochan.dungeon.core.gameview.renderobjects.IRenderObject;
 
 /**
  *
@@ -17,7 +17,6 @@ public abstract class RenderObject implements IRenderObject
 	{
 		return 10;
 	}
-
 
 	public GameFieldView getGameFieldView() { return gameFieldView; }
 	public void setGameFieldView(GameFieldView fieldView) { gameFieldView = fieldView; }

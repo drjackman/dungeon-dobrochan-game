@@ -53,7 +53,6 @@
   <resource type="image" id="MENU_BUTTON_DISABLED">Textures\Interface\Button\LongMenuButtonInactiv.png</resource>
 
   <!-- SOUNDS -->
-  <resource type="sound" id="MUSIC_TEST">Music\combat_theme_01_ogg.ogg</resource>
 
   <!-- PATHS -->
   <resource type="text" id="UNIT_IMAGE">Textures\Sprites\Creatures\</resource>

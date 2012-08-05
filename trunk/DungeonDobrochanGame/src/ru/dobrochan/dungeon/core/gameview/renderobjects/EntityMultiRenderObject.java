@@ -1,10 +1,10 @@
 
-package ru.dobrochan.dungeon.core.renderobjects;
+package ru.dobrochan.dungeon.core.gameview.renderobjects;
 
-import ru.dobrochan.dungeon.core.renderobjects.EntityRenderObject;
+import ru.dobrochan.dungeon.core.gameview.renderobjects.EntityRenderObject;
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
-import ru.dobrochan.dungeon.core.GameFieldView;
+import ru.dobrochan.dungeon.core.gameview.GameFieldView;
 
 /**
  *
