@@ -12,7 +12,10 @@ import ru.dobrochan.dungeon.core.IEntity;
 import sun.org.mozilla.javascript.internal.NativeArray;
 import sun.org.mozilla.javascript.internal.NativeObject;
 
+import static ru.dobrochan.dungeon.consts.UnitParams.*;
+
 /**
+ *
  *
  * @author SkinnyMan
  */
@@ -61,7 +64,7 @@ public class UnitScriptHandler
 		return LoadUnits();
 	}
 
-	public IEntity[] LoadUnits()
+	private IEntity[] LoadUnits()
 	{
 		String[] unitNames = loadUnitNames();
 		int count = unitNames.length;
@@ -73,7 +76,7 @@ public class UnitScriptHandler
 		return returnEntities;
 	}
 
-	public String[] loadUnitNames()
+	private String[] loadUnitNames()
 	{
 		NativeArray nativeUnits = (NativeArray)engine.get(UNITS);
 		return nativeArrayToStrings(nativeUnits);
@@ -92,6 +95,9 @@ public class UnitScriptHandler
 				val = nativeArrayToStrings((NativeArray)val);
 			entity.setParam(param, val);
 		}
+		int size = (int)Math.round((double)entity.getParam("Size"));	// пиздец
+		entity.setParam(U_WIDTH, size);
+		entity.setParam(U_HEIGHT, size);
 		return entity;
 	}
 

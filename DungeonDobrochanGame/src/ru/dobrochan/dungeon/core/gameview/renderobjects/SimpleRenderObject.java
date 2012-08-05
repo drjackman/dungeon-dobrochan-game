@@ -1,10 +1,10 @@
 
-package ru.dobrochan.dungeon.core.renderobjects;
+package ru.dobrochan.dungeon.core.gameview.renderobjects;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import ru.dobrochan.dungeon.core.GameFieldView;
+import ru.dobrochan.dungeon.core.gameview.GameFieldView;
 import sun.misc.BASE64Decoder;
 
 /**

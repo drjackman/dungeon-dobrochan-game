@@ -1,6 +1,7 @@
 package ru.dobrochan.dungeon;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,6 +69,7 @@ public class DungeonDobrochanGame extends StateBasedGame
 
     }
 
+
 	public static void main(String[] args)
     {
 		try
@@ -87,51 +89,7 @@ public class DungeonDobrochanGame extends StateBasedGame
 
 	private static void Test()
 	{
-		Properties pr = System.getProperties();
 
-		FileReader fr = null;
-		try
-		{
-			File file = new File("");
-			String absolutePath = file.getAbsolutePath();
-			fr = new FileReader(absolutePath + ContentPaths.SCRIPTS + "Const.js");
-			BufferedReader br = new BufferedReader(fr);
 
-			String line = br.readLine();
-			String data = "";
-			while (line != null)
-			{
-				data += line + "\n\r";
-				line = br.readLine();
-			}
-
-			ConstsScriptHandler.GetInstance().setConsts(data);
-			fr = new FileReader(absolutePath + ContentPaths.SCRIPTS + "Units.js");
-			UnitScriptHandler unitLoader = new UnitScriptHandler(fr);
-			String[] unitNames = unitLoader.loadUnitNames();
-			IEntity[] entities = unitLoader.LoadUnits();
-
-			fr = new FileReader(absolutePath + ContentPaths.SCRIPTS + "Calc.js");
-			CalcScriptHandler calc = new CalcScriptHandler(fr);
-
-			calc.calc(entities[0]);
-
-			int i = 0;
-		}
-		catch (IOException ex)
-		{
-			Logger.getLogger(DungeonDobrochanGame.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		finally
-		{
-			try
-			{
-				fr.close();
-			}
-			catch (IOException ex)
-			{
-				Logger.getLogger(DungeonDobrochanGame.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
 	}
 }

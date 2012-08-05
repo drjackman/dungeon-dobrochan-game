@@ -1,50 +1,96 @@
 
 package ru.dobrochan.dungeon.core.processor;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ru.dobrochan.dungeon.FileHelper;
+import ru.dobrochan.dungeon.content.ContentPaths;
+import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.core.*;
-import static ru.dobrochan.dungeon.core.CommandList.*;
+import ru.dobrochan.dungeon.core.gameview.GameFieldView;
+import static ru.dobrochan.dungeon.core.processor.servercommanddata.ServerCommandList.*;
+import ru.dobrochan.dungeon.core.scripts.ConstsScriptHandler;
+import ru.dobrochan.dungeon.core.scripts.UnitScriptHandler;
 
 /**
- * Ядро для реализации игровой логики.
+ * Represents the core of game logic.
  *
  * @author SkinnyMan
  */
-public class GameProcessor implements ICommandProcessor
+public final class GameProcessor implements ICommandProcessor
 {
-	// Паттерн Состояние.
+	// State pattern.
 	private GameProcessorState state;
 
-	private GameField gameField;
+	IdleState idleState;
+	PlayingState playingState;
+	// Many other states...
 
+	EntityFactory entityFactory;
+
+	private GameFieldView view;
 	private IEntityContainer entities;
 
-	// Может быть 1-2 слушателя (в общем случае произвольное кол-во), поэтому делаем так…
-	// Сорт оф Наблюдатель.
+	// Can be any number of listeners so use Observer pattern.
 	private List<IServerConnector> connectors;
 
+	IEntityContainer getEntityContainer() { return entities; }
+
+	GameFieldView getGameFieldView() { return view; }
+
 	/**
-	 * Инициализирует новый экземпляр класса GameProcessor.
+	 * Initialize a new instance of GameProcessor class.
 	 */
 	public GameProcessor()
 	{
-		entities = new ServerEntityContainer();
-		connectors = new ArrayList<>();
+		try
+		{
+			entities = new EntityContainer();
+			connectors = new ArrayList<>();
+
+			idleState = new IdleState(this);
+			playingState = new PlayingState(this);
+
+			entityFactory = new EntityFactory();
+
+			// The file open process must be encapsulated.
+			String constScriptTxt = FileHelper.ReadFileToEnd(ResourceManager.PATH + ContentPaths.SCRIPTS + "Const.js");
+			String unitScriptTxt = FileHelper.ReadFileToEnd(ResourceManager.PATH + ContentPaths.SCRIPTS + "Units.js");
+
+			ConstsScriptHandler.GetInstance().setConsts(constScriptTxt);
+			UnitScriptHandler ush = new UnitScriptHandler(unitScriptTxt);
+			entityFactory = new EntityFactory();
+			entityFactory.addTypes(ush.getUnits());
+
+
+			setState(idleState);
+		}
+		catch (FileNotFoundException ex)
+		{
+			Logger.getLogger(GameProcessor.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	/**
-	 * Добавляет адаптер.
+	 * Adds connector.
 	 *
 	 * @param connector
 	 */
 	public void addConnector(IServerConnector connector)
 	{
+		connector.SetServer(this);
 		connectors.add(connector);
+
 	}
 
 	/**
-	 * Удаляет адаптер.
+	 * Removes connector.
 	 *
 	 * @param connector
 	 */
@@ -54,7 +100,7 @@ public class GameProcessor implements ICommandProcessor
 	}
 
 	/**
-	 * Отправляет команду всем адаптерам.
+	 * Sends the specified command to all clients.
 	 *
 	 * @param command
 	 */
@@ -67,39 +113,24 @@ public class GameProcessor implements ICommandProcessor
 	}
 
 	/**
-	 * Устанавливает игровое состояние.
+	 * Sets the current game state.
 	 *
 	 * @param state
 	 */
 	void setState(GameProcessorState state)
 	{
-		// Конкретные команды обрабатываются в состояниях.
 		this.state = state;
 	}
 
 	/**
-	 * Вызывает обработку команды.
+	 * Handles the specified command.
 	 *
 	 * @param command команда
 	 */
 	@Override
 	public void processCommand(Command command)
 	{
+		// Delegates handle to the current state.
 		state.processCommand(command);
-	}
-
-	private void loadUnitTypes()
-	{
-
-	}
-
-	private void recalcParams(IEntity entity)
-	{
-
-	}
-
-	private void validateEntity(IEntity entity)
-	{
-
 	}
 }

@@ -7,6 +7,7 @@ package ru.dobrochan.dungeon.consts;
  */
 public class UnitParams
 {
+	public static String U_ID = "id";
 	public static String U_X = "posX";
 	public static String U_Y = "posY";
 	public static String U_WIDTH = "width";

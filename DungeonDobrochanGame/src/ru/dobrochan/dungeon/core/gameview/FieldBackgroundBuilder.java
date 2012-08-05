@@ -1,5 +1,5 @@
 
-package ru.dobrochan.dungeon.core;
+package ru.dobrochan.dungeon.core.gameview;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import ru.dobrochan.dungeon.Settings;
 import static ru.dobrochan.dungeon.consts.Surface.*;
 import ru.dobrochan.dungeon.content.ResourceManager;
+import ru.dobrochan.dungeon.core.GameField;
 
 /**
  * Представляет методы экземпляра класса для создания фона и неизменяемых объектов для GameFieldView.

@@ -73,10 +73,18 @@ public class Entity implements IEntity
 	{
 		// TODO сделать нормальное глубокое копирование
 		Entity entity = new Entity();
-		Set<String> sParams = params.keySet();
-		for (String param : sParams)
+		Set<String> paramsSet = params.keySet();
+		for (String param : paramsSet)
 		{
-			entity.setParam(param, getParam(param));
+			Object newParam = getParam(param);
+			if (newParam instanceof String[])
+			{
+				entity.setParam(param, ((String[])newParam).clone());
+			}
+			else
+			{
+				entity.setParam(param, newParam);
+			}
 		}
 		return entity;
 	}

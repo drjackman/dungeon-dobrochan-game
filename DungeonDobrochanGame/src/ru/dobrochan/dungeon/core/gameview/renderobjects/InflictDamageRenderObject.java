@@ -1,5 +1,5 @@
 
-package ru.dobrochan.dungeon.core.renderobjects;
+package ru.dobrochan.dungeon.core.gameview.renderobjects;
 
 import static ru.dobrochan.dungeon.consts.UnitParams.*;
 import org.newdawn.slick.Color;

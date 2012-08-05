@@ -98,7 +98,7 @@ public class PathFinder
 		int unitMovement = (Integer)entity.getParam(U_MOVEMENT);
 		int untiSize = (Integer)entity.getParam(U_SIZE);
 		// Добавляем юниты.
-		EntitiesHalper helper = new EntitiesHalper(entities);
+		EntitiesHelper helper = new EntitiesHelper(entities);
 		for (int i = 0; i < mapHeight; i++)
 			for (int j = 0; j < mapWidth; j++)
 			{

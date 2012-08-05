@@ -4,7 +4,7 @@ package ru.dobrochan.dungeon.core.processor;
 import ru.dobrochan.dungeon.core.Command;
 
 /**
- * Представляет игровое состояние.
+ * Represents the GameProcessor's state.
  *
  * @author SkinnyMan
  */
@@ -13,7 +13,7 @@ abstract class GameProcessorState
 	protected GameProcessor gameProcessor;
 
 	/**
-	 * Инициализирует новый экземпляр класса GameProcessorState для указанного GameProcessor'а.
+	 * Initialize a new instance of GameProcessorState class for specified GameProcessor.
 	 *
 	 * @param gameProcessor
 	 */
@@ -23,21 +23,18 @@ abstract class GameProcessorState
 	}
 
 	/**
-	 * Выполняет обработку указанной команды.
+	 * Handles the specified command.
 	 *
 	 * @param command
 	 */
-	void processCommand(Command command)
-	{
-
-	}
+	abstract void processCommand(Command command);
 
 	/**
-	 * Посылает команду.
+	 * Sends the specified command to client.
 	 *
 	 * @param command команда
 	 */
-	protected void sendCommand(Command command)
+	protected final void sendCommand(Command command)
 	{
 		gameProcessor.sendCommand(command);
 	}
