@@ -58,7 +58,6 @@ public class GameProcessState extends BasicGameState
 		// Build background for gameFieldView.
 		gameField = surfaceTest();	// test
 		gameFieldView.setGameField(gameField);
-		gameFieldView.rebuildBackground();
 
 		// Notify GameProcessor(Model) about the beginning of the game.
 		connector.SendCommandToServer(new Command(ClientCommandList.START_GAME));

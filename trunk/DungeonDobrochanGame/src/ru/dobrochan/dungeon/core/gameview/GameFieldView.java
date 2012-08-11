@@ -90,18 +90,19 @@ public class GameFieldView extends AbstractComponent
 	private int cellCountX = 35;
 	private int cellCountY = 16;
 
-	private Image background;
-
 	private GameField gameField;
 	private IEntityContainer entitysContainer;
 
 	private ArrayList<RenderObject> renderObjects;
 
 	private CursorBacklight cursorBacklight;
+	
+	private FieldBackgroundRenderer backgroundRenderer;
 
 	public GameFieldView(GUIContext context)
 	{
 		super(context);
+		
 		try
 		{
 			Cursor cursor = ResourceManager.getInstance().getCursor("CURSOR_MAIN");
@@ -118,29 +119,14 @@ public class GameFieldView extends AbstractComponent
 		{
 			Logger.getLogger(GameFieldView.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
-
+		
 		width = 1085;
 		height = 496;
 		cellWidth = 31;
 		cellHeight = 31;
 		renderObjects = new ArrayList<RenderObject>();
-		try
-		{
-			background = new Image(width, height);
-		}
-		catch (SlickException ex)
-		{
-			Logger.getLogger(GameFieldView.class.getName()).log(Level.SEVERE, null, ex);
-		}
 		cursorBacklight = new CursorBacklight(this);
-	}
-
-	public void rebuildBackground()
-	{
-		FieldBackgroundBuilder builder = new FieldBackgroundBuilder();
-		builder.setGameField(gameField);
-		background = builder.buildBackground();
+		backgroundRenderer = new FieldBackgroundRenderer();
 	}
 
 	@Override
@@ -264,7 +250,7 @@ public class GameFieldView extends AbstractComponent
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException
 	{
-		g.drawImage(background, 0, 0);
+		backgroundRenderer.drawBackground(g);
 		for (RenderObject rObj : renderObjects)
 		{
 			rObj.render(g);
@@ -314,6 +300,9 @@ public class GameFieldView extends AbstractComponent
 
 	public GameField getGameField() { return gameField; }
 
-	public void setGameField(GameField gameField) { this.gameField = gameField; }
-
+	public void setGameField(GameField gameField) 
+	{ 
+		this.gameField = gameField;
+		backgroundRenderer.setGameField(gameField);
+	}
 }

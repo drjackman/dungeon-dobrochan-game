@@ -38,7 +38,7 @@ public final class FileHelper
 			String tmp;
 			while ( (tmp = br.readLine())!= null )
 			{
-				sb.append(tmp).append('\r');
+				sb.append(tmp).append("\r\n");
 			}
 			return sb.toString();
 		}
