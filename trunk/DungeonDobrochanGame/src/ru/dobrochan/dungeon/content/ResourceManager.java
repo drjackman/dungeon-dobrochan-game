@@ -85,7 +85,7 @@ public class ResourceManager {
 		Document doc = null;
         try {
 			doc = docBuilder.parse (is);
-		} catch (SAXException | IOException e) {
+		} catch (Exception e) {
 			throw new SlickException("Could not load resources", e);
 		}
 
@@ -374,7 +374,7 @@ public class ResourceManager {
 			path = PATH + path;
 			cursor = CursorLoader.get().getCursor(path, hotSpotX, hotSpotY);
 		}
-		catch (IOException | LWJGLException e)
+		catch (Exception e)
 		{
 			throw new SlickException("Could not load cursor", e);
 		}

@@ -40,11 +40,11 @@ class PlayingState extends GameProcessorState
 
 	private void moveRequest(Cell target)
 	{
-		int id = (int)currnetEntity.getParam(U_ID);
+		int id = (Integer)currnetEntity.getParam(U_ID);
 		// Must be real pathfinding algorithm.
 		Cell[] path = new Cell[2];
-		int x = (int)currnetEntity.getParam(U_X);
-		int y = (int)currnetEntity.getParam(U_Y);
+		int x = (Integer)currnetEntity.getParam(U_X);
+		int y = (Integer)currnetEntity.getParam(U_Y);
 		Cell source = new Cell(x, y);
 		path[0] = source;
 		path[1] = target;

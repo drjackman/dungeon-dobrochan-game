@@ -17,9 +17,7 @@ import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.GUIContext;
 import ru.dobrochan.dungeon.Settings;
 import ru.dobrochan.dungeon.content.ContentPaths;
@@ -29,16 +27,20 @@ import ru.dobrochan.dungeon.core.EntitiesHelper;
 import ru.dobrochan.dungeon.core.GameField;
 import ru.dobrochan.dungeon.core.IEntity;
 import ru.dobrochan.dungeon.core.IEntityContainer;
-import static ru.dobrochan.dungeon.consts.UnitParams.*;
 import ru.dobrochan.dungeon.core.gameview.renderobjects.*;
-
+import ru.dobrochan.dungeon.ui.controls.AbstractControl;
+import ru.dobrochan.dungeon.ui.events.MouseClickedAction;
+import ru.dobrochan.dungeon.ui.events.MouseClickedEventArgs;
+import ru.dobrochan.dungeon.ui.events.MouseMovedAction;
+import ru.dobrochan.dungeon.ui.events.MouseMovedEventArgs;
+import ru.dobrochan.dungeon.ui.primitives.Point;
 
 /**
  * Represents the View of game field.
  *
  * @author SkinnyMan
  */
-public class GameFieldView extends AbstractComponent
+public class GameFieldView extends AbstractControl
 {
 	// Just for test.
 	private class CursorBacklight
@@ -57,7 +59,6 @@ public class GameFieldView extends AbstractComponent
 		{
 			rObj.setCell(cell);
 		}
-
 	}
 
 	// Is one Observer are enough?
@@ -127,6 +128,25 @@ public class GameFieldView extends AbstractComponent
 		renderObjects = new ArrayList<RenderObject>();
 		cursorBacklight = new CursorBacklight(this);
 		backgroundRenderer = new FieldBackgroundRenderer();
+		
+		onMouseMovedAdd(new MouseMovedAction(){
+			@Override
+			public void execute(AbstractControl sender, MouseMovedEventArgs e) {
+	            Cell c = getCellByPoint(e.getNewLocation());
+	            if (c != null)
+	            {
+		            cursorBacklight.update(c);
+	            }
+			}
+		});
+		
+		onMouseClickedAdd(new MouseClickedAction(){
+			@Override
+			public void execute(AbstractControl sender, MouseClickedEventArgs e) {
+	            Cell c = getCellByPoint(e.getLocation());
+	            if (c != null && eventListener != null)
+	            	eventListener.cellClicked(new CellClickEvent(c));}
+		});
 	}
 
 	@Override
@@ -255,39 +275,12 @@ public class GameFieldView extends AbstractComponent
 		{
 			rObj.render(g);
 		}
-
 	}
 
-	@Override
-	public void mouseMoved(int oldx, int oldy, int newx, int newy)
+	public Cell getCellByPoint(Point pt)
 	{
-		Cell c = getCellByXY(newx, newy);
-		if (c != null)
-		{
-			EntitiesHelper helper = new EntitiesHelper(entitysContainer);
-			IEntity entityFromXY = helper.getEntityFromXY(c.X, c.Y);
-			if (entityFromXY != null)
-			{
-				int s = 0;
-				System.out.println("CX=" + c.X + " CY=" + c.Y);
-			}
-		}
-		cursorBacklight.update(c);
-	}
-
-	@Override
-	public void mousePressed(int button, int x, int y)
-	{
-		Cell c = getCellByXY(x, y);
-		if (c != null)
-			eventListener.cellClicked(new CellClickEvent(c));
-		System.out.println(c.X + " " + c.Y);
-	}
-
-	public Cell getCellByXY(int x, int y)
-	{
-		int cx = (x - coordX)/cellWidth;
-		int cy = (y - coordY)/cellHeight;
+		int cx = (pt.getX() - coordX)/cellWidth;
+		int cy = (pt.getY()  - coordY)/cellHeight;
 		if (cx < 0 || cx >= cellCountX || cy < 0 || cy >= cellCountY)
 			return null;
 		return new Cell(cx, cy);
@@ -295,8 +288,10 @@ public class GameFieldView extends AbstractComponent
 
 	public IEntityContainer getEntityContainer() { return entitysContainer; }
 
-	public void setEntityContainer(IEntityContainer entitysContainer) {
-		this.entitysContainer = entitysContainer; }
+	public void setEntityContainer(IEntityContainer entitysContainer) 
+	{
+		this.entitysContainer = entitysContainer; 
+	}
 
 	public GameField getGameField() { return gameField; }
 
