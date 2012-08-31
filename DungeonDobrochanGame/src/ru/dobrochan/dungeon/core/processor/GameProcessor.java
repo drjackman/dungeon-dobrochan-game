@@ -52,7 +52,7 @@ public final class GameProcessor implements ICommandProcessor
 		try
 		{
 			entities = new EntityContainer();
-			connectors = new ArrayList<>();
+			connectors = new ArrayList<IServerConnector>();
 
 			idleState = new IdleState(this);
 			playingState = new PlayingState(this);

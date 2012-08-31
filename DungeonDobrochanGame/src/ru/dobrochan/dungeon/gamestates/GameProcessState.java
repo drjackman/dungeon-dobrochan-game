@@ -2,35 +2,33 @@
 package ru.dobrochan.dungeon.gamestates;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 import static ru.dobrochan.dungeon.consts.Surface.SURF_ROCK;
 import static ru.dobrochan.dungeon.consts.Surface.SURF_WATER;
-import ru.dobrochan.dungeon.content.ResourceManager;
+import ru.dobrochan.dungeon.DungeonDobrochanGame;
 import ru.dobrochan.dungeon.core.*;
 import ru.dobrochan.dungeon.core.controller.GameController;
 import ru.dobrochan.dungeon.core.gameview.GameFieldView;
 import ru.dobrochan.dungeon.core.processor.GameProcessor;
 import ru.dobrochan.dungeon.core.processor.SimpleConnector;
 import ru.dobrochan.dungeon.core.processor.clientcommanddata.ClientCommandList;
+import ru.dobrochan.dungeon.ui.controls.AbstractControl;
+import ru.dobrochan.dungeon.ui.controls.combined.MainMenu;
+import ru.dobrochan.dungeon.ui.controls.combined.RootControl;
+import ru.dobrochan.dungeon.ui.events.MouseClickedAction;
+import ru.dobrochan.dungeon.ui.events.MouseClickedEventArgs;
+import ru.dobrochan.dungeon.ui.primitives.Size;
 
 /**
  *
  * @author SkinnyMan
  */
-public class GameProcessState extends BasicGameState
+public class GameProcessState extends GameState
 {
-	private int id;
-	private Image background;
-	private Image windowBorder;
 
-	public GameProcessState(int id) { this.id = id; }
-
-	@Override
-	public int getID() { return id; }
+	public GameProcessState(int id) { super(id); }
 
 	private GameField gameField;
 	private GameFieldView gameFieldView;
@@ -41,73 +39,35 @@ public class GameProcessState extends BasicGameState
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException
 	{
 		super.enter(container, game);
+		
 		// Create main game components.
 		SimpleConnector connector = new SimpleConnector();
 		GameProcessor gameProcessor = new GameProcessor();
 		GameController gameController = new GameController();
-		gameFieldView = new GameFieldView(container);
 		entitiesContainer = new EntityContainer();
-
+		
 		// Link game component to each other.
 		gameProcessor.addConnector(connector);
 		gameController.setConnector(connector);
-		gameFieldView.setEntityContainer(entitiesContainer);
 		gameController.setEntityContainer(entitiesContainer);
 		gameController.setGameFieldView(gameFieldView);
-
-		// Build background for gameFieldView.
-		gameField = surfaceTest();	// test
-		gameFieldView.setGameField(gameField);
+		gameFieldView.setEntityContainer(entitiesContainer);
 
 		// Notify GameProcessor(Model) about the beginning of the game.
 		connector.SendCommandToServer(new Command(ClientCommandList.START_GAME));
 	}
-
-
-
+	
 	@Override
-	public void init(GameContainer container, StateBasedGame game) throws SlickException
+	protected RootControl buildRootControl(GUIContext context) throws SlickException 
 	{
-		background = ResourceManager.getInstance().getImage("WINDOW_BACKGROUND");
-		windowBorder = ResourceManager.getInstance().getImage("WINDOW_BORDER");
-
-		// test
-//
-//		IEntity entity = new Entity();
-//		entity.setParam(U_X, 2);
-//		entity.setParam(U_Y, 4);
-//		entity.setParam(U_SIZE, 2);
-//		entity.setParam(U_WIDTH, 2);
-//		entity.setParam(U_HEIGHT, 2);
-//
-//
-//		EntityMultiRenderObject entityRObj = new EntityMultiRenderObject();
-//		entityRObj.setOwner(entity);
-//
-//		//SubstrateRenderObject subRObj = new SubstrateRenderObject(Color.blue);
-//		BlinkingSubstrateRenderObject blinkRObj = new BlinkingSubstrateRenderObject(new Color(0, 0, 1.0f, 1.2f),
-//				new Color(0, 0, 1.0f, 0.3f));
-//
-//		//SimpleRenderObject sro1 = new SimpleRenderObject();
-//		SimpleRenderObject sro2 = new SimpleRenderObject();
-//		sro2.image = ResourceManager.getInstance().loadImage("Vampire60", ContentPaths.CREATURES + "Vampire60.png");
-//		entityRObj.addRenderObject(blinkRObj);
-//		entityRObj.addRenderObject(sro2);
-//
-//		InflictDamageRenderObject damage = new InflictDamageRenderObject(666);
-//		damage.setGameFieldView(gameFieldView);
-//		damage.setOwner(entity);
-//
-//		ClientEntity clientEntity = new ClientEntity(entity);
-//		clientEntity.setRenderObject(entityRObj);
-//
-//		gameFieldView.setGameField(gameField);
-//		gameFieldView.rebuildBackground();
-//		gameFieldView.setLocation(50, 100);
-//		gameFieldView.addRenderObject(entityRObj);
-//		gameFieldView.addRenderObject(damage);
+		RootControl rootControl = super.buildRootControl(context);	
+		gameField = surfaceTest();	// test
+		gameFieldView = new GameFieldView(context);
+		gameFieldView.setGameField(gameField);
+		rootControl.addChild(gameFieldView, new Size(10, 10));	
+		return rootControl;
 	}
-
+	
 	private GameField surfaceTest()
 	{
 		GameFieldBuilder gfb = new GameFieldBuilder();
@@ -117,7 +77,7 @@ public class GameProcessState extends BasicGameState
 		gfb.setRect(23, 3, 2, 8, SURF_ROCK);
 		gfb.setRect(19, 7, 8, 2, SURF_ROCK);
 
-		//gfb.setCell(7, 3, SURF_ROCK);
+		gfb.setCell(7, 3, SURF_ROCK);
 		gfb.setRect(7, 3, 2, 2, SURF_ROCK);
 
 		gfb.setRect(15, 12, 5, 2, SURF_ROCK);
@@ -139,19 +99,7 @@ public class GameProcessState extends BasicGameState
 		gfb.clearRect(0, 3, 2, 4);
 		gfb.clearRect(30, 10, 5, 3);
 
-		//gfb.setRect(0, 0, 35, 16, SURF_WATER);
-
 		return gfb.buildGameField();
-	}
-
-	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException
-	{
-		g.drawImage(background, 0, 0);
-
-		gameFieldView.render(container, g);
-
-		g.drawImage(windowBorder, 0, 0);
 	}
 
 	@Override
@@ -159,5 +107,4 @@ public class GameProcessState extends BasicGameState
 	{
 		gameFieldView.update(delta);
 	}
-
 }
