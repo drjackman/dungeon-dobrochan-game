@@ -14,7 +14,7 @@ public class RootControl extends ControlContainer {
 	public RootControl(GUIContext container, Image backgroundImage, Image bordersImage) {
 		super(container);
 		background = new Picture(container, backgroundImage);
-		borders = new Picture(container, backgroundImage);
+		borders = new Picture(container, bordersImage);
 		addChild(background);
 		addChild(borders);
 	}

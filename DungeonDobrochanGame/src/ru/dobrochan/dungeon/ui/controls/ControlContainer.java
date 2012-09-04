@@ -51,8 +51,10 @@ public class ControlContainer extends AbstractControl implements IControlContain
 	
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException {
-		for(AbstractControl control : children){
-			control.render(container, g);
+		if (visible)
+		{
+			for(AbstractControl control : children)
+				control.render(container, g);
 		}
 	}
 

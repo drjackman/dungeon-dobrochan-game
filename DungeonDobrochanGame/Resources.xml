@@ -1,6 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <resources>
 <!-- GAMEPLAY -->
+
+  <!-- Main battle screen controls -->
+  <resource type="image" id="BATTLE_SCREEN_SHORT_MENU">Textures\Interface\Button\ShortMenuButton.png</resource>
+  <resource type="image" id="BATTLE_SCREEN_ICON_SETTINGS">Textures\Interface\icons\Setting.png</resource>
+  <resource type="image" id="BATTLE_SCREEN_ICON_SAVE">Textures\Interface\icons\Save.png</resource>
+  <resource type="image" id="BATTLE_SCREEN_ICON_LOAD">Textures\Interface\icons\Load.png</resource>  
+  <resource type="image" id="BATTLE_SCREEN_ABILITY">Textures\Interface\icons\Ability.png</resource>
+  <resource type="image" id="BATTLE_SCREEN_MAGIC">Textures\Interface\icons\Magic.png</resource>
+  <resource type="image" id="BATTLE_SCREEN_WAIT">Textures\Interface\icons\Wait.png</resource>
+  
+  <!-- Creatures bar -->
+  <resource type="image" id="CREATURES_BAR_BACKGROUND">Textures\Interface\IndCreatures.png</resource>
+  <resource type="image" id="CREATURES_BAR_PROGRESS">Textures\Interface\ProgressBar.png</resource>
+
+  <!-- Log control -->
+  <resource type="image" id="LOG_BACKGROUND_MIN">Textures\Interface\logMin.png</resource>
+  <resource type="image" id="LOG_BACKGROUND_MAX">Textures\Interface\logMax.png</resource>
+  <resource type="image" id="LOG_BUTTON_MINIMIZE">Textures\Interface\Button\logMin.png</resource>
+  <resource type="image" id="LOG_BUTTON_MAXIMIZE">Textures\Interface\Button\logMax.png</resource>
+  <resource type="image" id="LOG_ARROW">Textures\Interface\Button\Arrow1.png</resource>
+  
   <!-- Background -->
   <resource type="image" id="WINDOW_BACKGROUND">Textures\Interface\MainMenu\MainMenuBack1.png</resource>
   <resource type="image" id="WINDOW_MAIN_MENU_BACK">Textures\Interface\MainMenu\MainMenuBack1.png</resource>

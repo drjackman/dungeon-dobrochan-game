@@ -41,7 +41,8 @@ public class Picture extends AbstractControl {
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException
 	{
-		g.drawImage(getCurrentImage(), getX(), getY());		
+		if (visible)
+			g.drawImage(getCurrentImage(), getX(), getY());		
 	}
 
 	@Override

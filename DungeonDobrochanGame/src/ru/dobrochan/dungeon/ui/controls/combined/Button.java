@@ -18,7 +18,7 @@ public class Button extends ControlContainer {
 		super(container);
 				
 		background = new Picture(container, normalImage);
-		textOutput = new TextOutput(container, text, font);	
+		textOutput = new TextOutput(container, font, text);	
 		
 		// Do not change order.
 		this.addChild(background);
