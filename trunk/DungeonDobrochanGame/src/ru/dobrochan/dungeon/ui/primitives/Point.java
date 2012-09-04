@@ -56,4 +56,10 @@ public class Point {
 	static public Point Add(Point pt, Size sz) {
 		return new Point(pt.x + sz.getWidth(), pt.y + sz.getHeight());
 	}	
+	
+	static public boolean inBounds(Point location, Size size, Point test){
+
+		return location.x <= test.x && test.x <= location.x + size.getWidth() &&
+			   location.y <= test.y && test.y <= location.y + size.getHeight();
+	}
 }

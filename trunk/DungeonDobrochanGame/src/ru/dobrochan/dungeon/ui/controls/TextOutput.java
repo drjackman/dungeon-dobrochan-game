@@ -13,7 +13,7 @@ public class TextOutput extends AbstractControl {
 	Font font;
 	Size outputSize;
 
-	public TextOutput(GUIContext container, String text, Font font) {
+	public TextOutput(GUIContext container, Font font, String text) {
 		super(container);	
 		this.font = font;
 		setText(text);
@@ -22,7 +22,8 @@ public class TextOutput extends AbstractControl {
 	@Override
 	public void render(GUIContext container, Graphics g) throws SlickException 
 	{
-		g.drawString(text, getX(), getY());
+		if (visible)
+			g.drawString(text, getX(), getY());
 	}
 
 	public Font getFont() {

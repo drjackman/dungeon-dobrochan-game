@@ -8,8 +8,12 @@ import ru.dobrochan.dungeon.ui.events.*;
 public abstract class AbstractControl extends AbstractComponent {
 
 	private Point location;//of the left upper corner
-	protected IControlContainer parent;
-	protected boolean disabled = false, visible = true, hovered = false, pressed = false;	
+	protected IControlContainer parent;	
+	protected boolean disabled = false, visible = true, hovered = false, pressed = false;
+	
+	public IControlContainer getParent(){
+		return parent;
+	}
 	
 	public boolean isDisabled() {
 		return disabled;
@@ -19,39 +23,27 @@ public abstract class AbstractControl extends AbstractComponent {
 		return !disabled;
 	}
 
-	public void disable(boolean disabled) {
-		this.disabled = true;
+	public void setEnabled(boolean enabled) {
+		this.disabled = !enabled;
 	}	
-	
-	public void enable(boolean disabled) {
-		this.disabled = false;
-	}
 
 	public boolean isVisible() {
 		return visible;
 	}
 
-	public void show() {
-		this.visible = true;
-	}
-	
-	public void hide() {
-		this.visible = false;
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 	public boolean inBounds(Point point)
 	{
-		int x = point.getX(),
-			y = point.getY();
-		
-		return inBounds(x, y);
+		return Point.inBounds(getLocation(), getSize(), point);
 	}
 	
 	public boolean inBounds(int x, int y)
 	{
-		return getX() <= x && x <= getX() + getWidth() &&
-			   getY() <= y && y <= getY() + getHeight();
-	}
+		return inBounds(new Point(x, y));
+	}	
 	
 	public AbstractControl(GUIContext container) {
 		super(container);

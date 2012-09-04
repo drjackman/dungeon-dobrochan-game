@@ -1,13 +1,18 @@
 
 package ru.dobrochan.dungeon.gamestates;
 
+import java.io.File;
+
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
 import static ru.dobrochan.dungeon.consts.Surface.SURF_ROCK;
 import static ru.dobrochan.dungeon.consts.Surface.SURF_WATER;
-import ru.dobrochan.dungeon.DungeonDobrochanGame;
+import ru.dobrochan.dungeon.content.ResourceManager;
 import ru.dobrochan.dungeon.core.*;
 import ru.dobrochan.dungeon.core.controller.GameController;
 import ru.dobrochan.dungeon.core.gameview.GameFieldView;
@@ -15,7 +20,9 @@ import ru.dobrochan.dungeon.core.processor.GameProcessor;
 import ru.dobrochan.dungeon.core.processor.SimpleConnector;
 import ru.dobrochan.dungeon.core.processor.clientcommanddata.ClientCommandList;
 import ru.dobrochan.dungeon.ui.controls.AbstractControl;
-import ru.dobrochan.dungeon.ui.controls.combined.MainMenu;
+import ru.dobrochan.dungeon.ui.controls.Picture;
+import ru.dobrochan.dungeon.ui.controls.combined.CreaturesBar;
+import ru.dobrochan.dungeon.ui.controls.combined.LogControl;
 import ru.dobrochan.dungeon.ui.controls.combined.RootControl;
 import ru.dobrochan.dungeon.ui.events.MouseClickedAction;
 import ru.dobrochan.dungeon.ui.events.MouseClickedEventArgs;
@@ -57,15 +64,103 @@ public class GameProcessState extends GameState
 		connector.SendCommandToServer(new Command(ClientCommandList.START_GAME));
 	}
 	
+	LogControl logControl;
+	Picture btnSettings, btnSave, btnLoad, popupAbility, popupMagic, popupWait;
+	CreaturesBar creaturesBar;
+	
 	@Override
 	protected RootControl buildRootControl(GUIContext context) throws SlickException 
 	{
 		RootControl rootControl = super.buildRootControl(context);	
+		
+		Font font = new UnicodeFont("fonts"+ File.separator +"GABRIOLA.ttf", 12, false, false);
+		
 		gameField = surfaceTest();	// test
 		gameFieldView = new GameFieldView(context);
-		gameFieldView.setGameField(gameField);
-		rootControl.addChild(gameFieldView, new Size(10, 10));	
+		gameFieldView.setGameField(gameField);			
+
+		logControl = new LogControl(context, font);
+		
+		btnSettings = new Picture(context, buildMenuButtonPicture("BATTLE_SCREEN_ICON_SETTINGS"));
+		btnSave = new Picture(context, buildMenuButtonPicture("BATTLE_SCREEN_ICON_SAVE"));
+		btnLoad = new Picture(context, buildMenuButtonPicture("BATTLE_SCREEN_ICON_LOAD"));
+		
+		popupAbility = new Picture(context, ResourceManager.getInstance().getImage("BATTLE_SCREEN_ABILITY"));
+		popupMagic = new Picture(context, ResourceManager.getInstance().getImage("BATTLE_SCREEN_MAGIC"));
+		popupWait = new Picture(context, ResourceManager.getInstance().getImage("BATTLE_SCREEN_WAIT"));
+
+		creaturesBar = new CreaturesBar(context, font);
+		
+		rootControl.addChild(gameFieldView, new Size(10, 10));
+		rootControl.addChild(logControl, new Size(0, 15));
+		
+		int SCREEN_WIDTH = 1280;
+		int barX = (SCREEN_WIDTH - creaturesBar.getWidth()) / 2;
+		rootControl.addChild(creaturesBar, new Size(barX, getDockedControlYOffset(creaturesBar) + 7));
+		
+		rootControl.addChild(btnSettings, new Size(100, 
+				getDockedControlYOffset(btnSettings)));
+		rootControl.addChild(btnSave, new Size(100 + (btnSettings.getWidth() + 10), 
+				getDockedControlYOffset(btnSave)));
+		rootControl.addChild(btnLoad, new Size(100 + (btnSettings.getWidth() + 10) + (btnSave.getWidth() + 10),  
+				getDockedControlYOffset(btnLoad)));
+		
+		rootControl.addChild(popupAbility, new Size(970, getDockedControlYOffset(popupAbility)));
+		rootControl.addChild(popupMagic, new Size(1070, getDockedControlYOffset(popupMagic)));
+		rootControl.addChild(popupWait, new Size(1150, getDockedControlYOffset(popupWait)));
+		
+		controlsTest();
+		
 		return rootControl;
+	}
+	
+	private void controlsTest() throws SlickException{		
+		logControl.addMessage("1ssssss");
+		logControl.addMessage("2ssssss");
+		logControl.addMessage("3ssssss");
+		logControl.addMessage("4ssssss");
+		logControl.addMessage("5ssssss");
+		logControl.addMessage("6ssssss");
+		logControl.addMessage("7ssssss");
+		
+		creaturesBar.setLabelText("10/15");
+		
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Archer60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Buffaloman60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Archer60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Buffaloman60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Archer60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Buffaloman60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Archer60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Buffaloman60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Archer60.png"));
+		creaturesBar.getCreaturesImages().add(
+				new Image("Textures\\Sprites\\Creatures\\Buffaloman60.png"));	
+	}
+	
+	private int getDockedControlYOffset(AbstractControl control){
+		int SCREEN_HEIGHT = 800;		
+		int BORDER_WIDTH = 7;
+		return SCREEN_HEIGHT - control.getHeight() - BORDER_WIDTH;
+	}
+	
+	private Image buildMenuButtonPicture(String iconName) throws SlickException{
+		Image background = ResourceManager.getInstance().getImage("BATTLE_SCREEN_SHORT_MENU").copy();
+		Image icon = ResourceManager.getInstance().getImage(iconName);
+		int x = (background.getWidth() - icon.getWidth()) / 2;
+		int y = (background.getHeight() - icon.getHeight()) / 2 + 5;
+		background.getGraphics().drawImage(icon, x, y);
+		background.getGraphics().flush();
+		return background;
 	}
 	
 	private GameField surfaceTest()

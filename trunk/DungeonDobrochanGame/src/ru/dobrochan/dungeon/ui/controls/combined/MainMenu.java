@@ -38,5 +38,4 @@ public class MainMenu extends ControlContainer {
 		newButton.onMouseClickedAdd(action);
 		addChild(newButton, new Size(140, 245 + buttons.size() * (normal.getHeight() + 10)));
 	}
-
 }
