@@ -1,7 +1,6 @@
 
 package ru.dobrochan.dungeon.core.scripts;
 
-import sun.security.jca.GetInstance;
 
 /**
  *

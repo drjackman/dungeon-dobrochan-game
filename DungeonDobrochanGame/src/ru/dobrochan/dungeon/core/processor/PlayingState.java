@@ -57,4 +57,19 @@ class PlayingState extends GameProcessorState
 		sendCommand(command);
 	}
 
+	private void checkEndOfBattle()
+	{
+
+	}
+
+	private void onStartRound()
+	{
+
+	}
+
+	private void onEndRound()
+	{
+
+	}
+
 }

@@ -1,13 +1,13 @@
 
 package ru.dobrochan.dungeon.content;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,9 +15,6 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Cursor;
 import org.newdawn.slick.*;
 import org.newdawn.slick.loading.LoadingList;
-import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.openal.AudioImpl;
-import org.newdawn.slick.openal.DeferredSound;
 import org.newdawn.slick.opengl.CursorLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
