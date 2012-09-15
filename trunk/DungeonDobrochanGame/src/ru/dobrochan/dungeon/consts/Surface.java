@@ -1,6 +1,8 @@
 
 package ru.dobrochan.dungeon.consts;
 
+import com.sun.corba.se.spi.orb.ParserImplTableBase;
+
 
 /**
  *
@@ -16,4 +18,27 @@ public class Surface
 
 
 	private Surface() { }
+}
+
+enum Surface2
+{
+	EMPTY,
+	PIT,
+	WATER;
+}
+
+interface Surface_
+{
+	int
+	SURF_Empty = 0,
+	SURF_PIT = 1;
+}
+
+class s
+{
+	void f()
+	{
+		int s = Surface_.SURF_PIT;
+		Surface2 d = Surface2.PIT;
+	}
 }

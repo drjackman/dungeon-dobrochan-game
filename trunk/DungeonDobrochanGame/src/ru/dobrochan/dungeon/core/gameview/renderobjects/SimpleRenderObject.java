@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import ru.dobrochan.dungeon.core.gameview.GameFieldView;
-import sun.misc.BASE64Decoder;
 
 /**
  *

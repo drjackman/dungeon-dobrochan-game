@@ -27,6 +27,9 @@ class IdleState extends GameProcessorState
 			case ClientCommandList.START_GAME:
 				startGame();
 				break;
+			case ClientCommandList.START_TEST_LVL:
+				startTestLvl();
+				break;
 			default:
 				System.out.print("Invalid command.");
 				break;
@@ -49,4 +52,8 @@ class IdleState extends GameProcessorState
 		gameProcessor.setState(gameProcessor.playingState);
 	}
 
+	private void startTestLvl()
+	{
+
+	}
 }

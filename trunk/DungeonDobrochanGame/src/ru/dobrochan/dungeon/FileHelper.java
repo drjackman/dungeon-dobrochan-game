@@ -7,9 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ru.dobrochan.dungeon.content.ContentPaths;
-import ru.dobrochan.dungeon.core.scripts.ConstsScriptHandler;
-import ru.dobrochan.dungeon.core.scripts.UnitScriptHandler;
 
 /**
  *
