@@ -7,7 +7,6 @@ import java.io.File;
  * Содержит пути к основным рабочим деректориям.
  * (В будующем и деректории будут указыватся в XML-файле ресурсов.)
  *
- * @deprecated
  * @author SkinnyMan
  */
 public class ContentPaths

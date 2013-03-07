@@ -2,7 +2,7 @@ package ru.dobrochan.dungeon.ui.events;
 
 public class EventArgs 
 {
-	EventArgs()
+	protected EventArgs()
 	{
 	}
 	

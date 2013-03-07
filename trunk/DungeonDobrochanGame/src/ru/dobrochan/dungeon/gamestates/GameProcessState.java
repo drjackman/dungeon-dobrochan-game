@@ -2,6 +2,7 @@
 package ru.dobrochan.dungeon.gamestates;
 
 import java.io.File;
+import java.util.List;
 
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -10,23 +11,23 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.state.StateBasedGame;
-import static ru.dobrochan.dungeon.consts.Surface.SURF_ROCK;
-import static ru.dobrochan.dungeon.consts.Surface.SURF_WATER;
+
+import ru.dobrochan.dungeon.core.consts.Surface;
 import ru.dobrochan.dungeon.content.ResourceManager;
-import ru.dobrochan.dungeon.core.*;
-import ru.dobrochan.dungeon.core.controller.GameController;
-import ru.dobrochan.dungeon.core.gameview.GameFieldView;
-import ru.dobrochan.dungeon.core.processor.GameProcessor;
-import ru.dobrochan.dungeon.core.processor.SimpleConnector;
-import ru.dobrochan.dungeon.core.processor.clientcommanddata.ClientCommandList;
 import ru.dobrochan.dungeon.ui.controls.AbstractControl;
 import ru.dobrochan.dungeon.ui.controls.Picture;
 import ru.dobrochan.dungeon.ui.controls.combined.CreaturesBar;
 import ru.dobrochan.dungeon.ui.controls.combined.LogControl;
 import ru.dobrochan.dungeon.ui.controls.combined.RootControl;
-import ru.dobrochan.dungeon.ui.events.MouseClickedAction;
-import ru.dobrochan.dungeon.ui.events.MouseClickedEventArgs;
 import ru.dobrochan.dungeon.ui.primitives.Size;
+import ru.dobrochan.dungeon.ui.gamefield.*;
+import ru.dobrochan.dungeon.core.GameContext;
+import ru.dobrochan.dungeon.core.GameField;
+import ru.dobrochan.dungeon.core.models.*;
+import ru.dobrochan.dungeon.core.views.*;
+import ru.dobrochan.dungeon.core.server.*;
+import ru.dobrochan.dungeon.core.actions.queries.MoveQuery;
+import ru.dobrochan.dungeon.core.actions.AbstractAction;
 
 /**
  *
@@ -36,32 +37,38 @@ public class GameProcessState extends GameState
 {
 
 	public GameProcessState(int id) { super(id); }
+	
+	GameProcessModel model;
+	GameProcessView view;
+	
+	//test: single machine game
+	Server server;
+	ServerConnector connector;
 
 	private GameField gameField;
-	private GameFieldView gameFieldView;
+	private GameFieldControl gameFieldControl;
 
-	private IEntityContainer entitiesContainer;
+	//private IEntityContainer entitiesContainer;
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException
 	{
 		super.enter(container, game);
-		
-		// Create main game components.
-		SimpleConnector connector = new SimpleConnector();
-		GameProcessor gameProcessor = new GameProcessor();
-		GameController gameController = new GameController();
-		entitiesContainer = new EntityContainer();
-		
-		// Link game component to each other.
-		gameProcessor.addConnector(connector);
-		gameController.setConnector(connector);
-		gameController.setEntityContainer(entitiesContainer);
-		gameController.setGameFieldView(gameFieldView);
-		gameFieldView.setEntityContainer(entitiesContainer);
+		model = new GameProcessModel(gameField, new ru.dobrochan.dungeon.core.units.Skeleton(1, 2, 2));
+		view = new GameProcessView(gameFieldControl);
+		server = new Server(model);
+		connector = new SingleMachineServerConnector(server);
 
-		// Notify GameProcessor(Model) about the beginning of the game.
-		connector.SendCommandToServer(new Command(ClientCommandList.START_GAME));
+		gameFieldControl.onCellClickedAdd(new CellClickedAction(){
+			@Override 
+			public void execute(AbstractControl sender, CellClickedEventArgs e) {	
+				GameContext context = new GameContext(1, null, model, view);
+				List<AbstractAction> actions = 
+						connector.SendQuery(new MoveQuery(context.id(), 1, e.getCellX(), e.getCellY()));
+				for (AbstractAction action : actions)
+					action.execute(context);				
+			}				
+		});
 	}
 	
 	LogControl logControl;
@@ -74,10 +81,10 @@ public class GameProcessState extends GameState
 		RootControl rootControl = super.buildRootControl(context);	
 		
 		Font font = new UnicodeFont("fonts"+ File.separator +"GABRIOLA.ttf", 12, false, false);
-		
+
 		gameField = surfaceTest();	// test
-		gameFieldView = new GameFieldView(context);
-		gameFieldView.setGameField(gameField);			
+		gameFieldControl = new GameFieldControl(context);
+		gameFieldControl.setGameField(gameField);
 
 		logControl = new LogControl(context, font);
 		
@@ -91,7 +98,7 @@ public class GameProcessState extends GameState
 
 		creaturesBar = new CreaturesBar(context, font);
 		
-		rootControl.addChild(gameFieldView, new Size(10, 10));
+		rootControl.addChild(gameFieldControl, new Size(10, 10));
 		rootControl.addChild(logControl, new Size(0, 15));
 		
 		int SCREEN_WIDTH = 1280;
@@ -162,44 +169,44 @@ public class GameProcessState extends GameState
 		background.getGraphics().flush();
 		return background;
 	}
-	
+
 	private GameField surfaceTest()
 	{
 		GameFieldBuilder gfb = new GameFieldBuilder();
-		gfb.setRect(5, 6, 4, 4, SURF_ROCK);
-		gfb.setRect(8, 9, 3, 3, SURF_ROCK);
+		gfb.setRect(5, 6, 4, 4, Surface.ROCK());
+		gfb.setRect(8, 9, 3, 3, Surface.ROCK());
 
-		gfb.setRect(23, 3, 2, 8, SURF_ROCK);
-		gfb.setRect(19, 7, 8, 2, SURF_ROCK);
+		gfb.setRect(23, 3, 2, 8, Surface.ROCK());
+		gfb.setRect(19, 7, 8, 2, Surface.ROCK());
 
-		gfb.setCell(7, 3, SURF_ROCK);
-		gfb.setRect(7, 3, 2, 2, SURF_ROCK);
+		gfb.setCell(7, 3, Surface.ROCK());
+		gfb.setRect(7, 3, 2, 2, Surface.ROCK());
 
-		gfb.setRect(15, 12, 5, 2, SURF_ROCK);
-		gfb.setRect(16, 11, 4, 1, SURF_ROCK);
-		gfb.setRect(17, 10, 3, 1, SURF_ROCK);
-		gfb.setRect(18, 9, 2, 1, SURF_ROCK);
+		gfb.setRect(15, 12, 5, 2, Surface.ROCK());
+		gfb.setRect(16, 11, 4, 1, Surface.ROCK());
+		gfb.setRect(17, 10, 3, 1, Surface.ROCK());
+		gfb.setRect(18, 9, 2, 1, Surface.ROCK());
 
-		gfb.setRect(0, 0, 35, 2, SURF_ROCK);
-		gfb.setRect(0, 0, 2, 16, SURF_ROCK);
-		gfb.setRect(30, 0, 5, 16, SURF_ROCK);
-		gfb.setRect(0, 14, 35, 2, SURF_ROCK);
+		gfb.setRect(0, 0, 35, 2, Surface.ROCK());
+		gfb.setRect(0, 0, 2, 16, Surface.ROCK());
+		gfb.setRect(30, 0, 5, 16, Surface.ROCK());
+		gfb.setRect(0, 14, 35, 2, Surface.ROCK());
 
-		gfb.setRect(10, 5, 4, 3, SURF_WATER);
+		gfb.setRect(10, 5, 4, 3, Surface.WATER());
 		gfb.clearCell(13, 7);
 
-		gfb.setRect(17, 5, 6, 4, SURF_WATER);
-		gfb.setRect(20, 9, 3, 2, SURF_WATER);
+		gfb.setRect(17, 5, 6, 4, Surface.WATER());
+		gfb.setRect(20, 9, 3, 2, Surface.WATER());
 
 		gfb.clearRect(0, 3, 2, 4);
 		gfb.clearRect(30, 10, 5, 3);
 
-		return gfb.buildGameField();
+		return gfb.getBuiltField();
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
-		gameFieldView.update(delta);
+		gameFieldControl.update(delta);
 	}
 }
