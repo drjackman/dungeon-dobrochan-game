@@ -1,22 +1,18 @@
 package ru.dobrochan.dungeon;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import org.xmlpull.mxp1.MXParser;
-import ru.dobrochan.dungeon.content.ContentPaths;
 import ru.dobrochan.dungeon.content.ResourceManager;
-import ru.dobrochan.dungeon.core.IEntity;
-import ru.dobrochan.dungeon.core.scripts.CalcScriptHandler;
-import ru.dobrochan.dungeon.core.scripts.ConstsScriptHandler;
-import ru.dobrochan.dungeon.core.scripts.UnitScriptHandler;
-import ru.dobrochan.dungeon.core.xmlloader.UnitLoader;
+//import ru.dobrochan.dungeon.core.IEntity;
+//import ru.dobrochan.dungeon.core.scripts.CalcScriptHandler;
+//import ru.dobrochan.dungeon.core.scripts.ConstsScriptHandler;
+//import ru.dobrochan.dungeon.core.scripts.UnitScriptHandler;
+//import ru.dobrochan.dungeon.core.xmlloader.UnitLoader;
 import ru.dobrochan.dungeon.gamestates.GamePoolState;
 import ru.dobrochan.dungeon.gamestates.GameProcessState;
 import ru.dobrochan.dungeon.gamestates.MainMenuState;
@@ -76,7 +72,7 @@ public class DungeonDobrochanGame extends StateBasedGame
     {
 		try
 		{
-			Test();
+			//Test();
 			AppGameContainer app = new AppGameContainer(new DungeonDobrochanGame());
 			app.setDisplayMode(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT, false);
 			app.setUpdateOnlyWhenVisible(false);
@@ -85,33 +81,31 @@ public class DungeonDobrochanGame extends StateBasedGame
 		}
 		catch(SlickException e)
 		{
-			int q = 0;
 			e.printStackTrace();
-
 		}
     }
 
-	private static void Test()
-	{
-		String str = "";
-
-		if (str.isEmpty())
-			System.out.format("String %s", "is empty.");
-		if (str == null)
-			System.out.format("String %s", "is null.");
-
-
-		InputStream is = null;
-		try
-		{
-			is = new FileInputStream("Units.xml");
-			UnitLoader ul = new UnitLoader();
-			ul.loadUnits(is);
-		}
-		catch (FileNotFoundException | SlickException ex)
-		{
-			Logger.getLogger(DungeonDobrochanGame.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-	}
+//	private static void Test()
+//	{
+//		String str = "";
+//
+//		if (str.isEmpty())
+//			System.out.format("String %s", "is empty.");
+//		if (str == null)
+//			System.out.format("String %s", "is null.");
+//
+//
+//		InputStream is = null;
+//		try
+//		{
+//			is = new FileInputStream("Units.xml");
+//			//UnitLoader ul = new UnitLoader();
+//			//ul.loadUnits(is);
+//		}
+//		catch (FileNotFoundException | SlickException ex)
+//		{
+//			Logger.getLogger(DungeonDobrochanGame.class.getName()).log(Level.SEVERE, null, ex);
+//		}
+//
+//	}
 }

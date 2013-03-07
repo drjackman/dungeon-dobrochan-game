@@ -2,7 +2,6 @@
 package ru.dobrochan.dungeon.content;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Cursor;
 import org.newdawn.slick.*;
 import org.newdawn.slick.loading.LoadingList;
@@ -20,7 +18,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /** Представляет средства для работы с ресурсами. */
 public class ResourceManager {
@@ -404,30 +401,29 @@ public class ResourceManager {
 			this.duration = duration;
 		}
 
-		public final int getDuration() {
-			return duration;
-		}
-		public final void setDuration(int duration) {
-			this.duration = duration;
-		}
-		public final int getTw() {
-			return tw;
-		}
-		public final void setTw(int tw) {
-			this.tw = tw;
-		}
-		public final int getTh() {
-			return th;
-		}
-		public final void setTh(int th) {
-			this.th = th;
-		}
+//		public final int getDuration() {
+//			return duration;
+//		}
+//		public final void setDuration(int duration) {
+//			this.duration = duration;
+//		}
+//		public final int getTw() {
+//			return tw;
+//		}
+//		public final void setTw(int tw) {
+//			this.tw = tw;
+//		}
+//		public final int getTh() {
+//			return th;
+//		}
+//		public final void setTh(int th) {
+//			this.th = th;
+//		}
+//		public final void setImageId(String imageId) {
+//			this.imageId = imageId;
+//		}
 		public final String getImageId() {
 			return imageId;
 		}
-		public final void setImageId(String imageId) {
-			this.imageId = imageId;
-		}
-
 	}
 }
